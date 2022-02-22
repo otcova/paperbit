@@ -1,17 +1,21 @@
 {
   "name": "paperbit",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Fast WebGL utility library",
   "main": "./lib/index.js",
   "scripts": {
     "watch": "tsc --watch",
     "build": "tsc",
     "prepublish": "tsc"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["webgl", "graphics"],
+  "author": "otcova",
   "license": "ISC",
   "devDependencies": {
     "typescript": "^4.5.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/otcova/paperbit"
   }
 }
