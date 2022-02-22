@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"moduleResolution": "node",
+		"module": "es2020",
+		"target": "es2017",
+		"outDir": "lib",
+		"declaration": true,
+		"sourceMap": true,
+		
+		"strict": true
+	},
+	"include": ["src"]
+}

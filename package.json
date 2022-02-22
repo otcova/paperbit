@@ -1,0 +1,17 @@
+{
+  "name": "paperbit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./lib/index.js",
+  "scripts": {
+    "watch": "tsc --watch",
+    "build": "tsc",
+    "prepublish": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  }
+}
