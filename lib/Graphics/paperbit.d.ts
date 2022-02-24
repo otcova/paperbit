@@ -1,73 +1,22 @@
-import { Graphics } from "./graphics";
+import { canvasEventName, Graphics } from "./graphics";
+import { Frame } from "./eventLoop";
+import { keyboardEventsNames as keyboardEventName, PaperbitKeyboard } from "./keyboard";
+import { mouseEventName, PaperbitMouse } from "./mouse";
+import { eventCallback } from "./eventsMng";
 import { GraphicsAPI } from "./api/graphicsAPI";
-declare type PaperbitEvents = "setup" | "draw" | "resize" | "mouseMove" | "mouseDown" | "mouseUp" | "mouseWheel" | "mouse" | "keyDown" | "keyUp" | "keyPress";
-declare type onType = {
-    [key in PaperbitEvents]?: (paperbit: Paperbit) => void | Promise<void>;
-};
-declare abstract class PaperbitEventsBase extends GraphicsAPI {
-    protected protectedOn: onType;
-    on: onType;
-    protected abstract paperbit: Paperbit;
-    sendEvent(name: PaperbitEvents): Promise<void>;
-}
-declare abstract class Canvas extends PaperbitEventsBase {
-    container: HTMLElement;
-    canvas: HTMLCanvasElement;
-    gl: WebGL2RenderingContext;
-    private resizeObserver;
-    private newSize?;
-    constructor(container: HTMLElement);
-    private resize;
-    protected resizeAfterFrame(): void;
-}
-interface Mouse {
-    pos: [number, number];
-    left: boolean;
-    right: boolean;
-    middle: boolean;
-    wheel: number;
-}
-interface MouseDelta {
-    pos: [number, number];
-    left: number;
-    right: number;
-    middle: number;
-    wheel: number;
-}
-declare abstract class MouseEvents extends Canvas {
-    mouse: Mouse;
-    pastMouse: Mouse;
-    deltaMouse: MouseDelta;
-    constructor(container: HTMLElement);
-    protected updateMouse(e?: MouseEvent | WheelEvent): void;
-}
-declare abstract class KeyboardEvents extends MouseEvents {
-    constructor(container: HTMLElement);
-    private updateKey;
-}
-declare abstract class PaperbitGraphics extends KeyboardEvents {
-    graphics: Graphics;
-    constructor(container: HTMLElement);
-    protected load(): void;
-    protected renderFrame(): void;
-}
-declare type FrameType = {
-    count: number;
-    time: number;
-    deltaTime: number;
-    fps: number;
-    size: [number, number];
-    pixelSize: number;
-};
-declare abstract class EventLoop extends PaperbitGraphics {
-    frame: FrameType;
-    private frameTimeOffset;
-    constructor(container: HTMLElement);
-    private draw;
-    private updateFrame;
-}
-export declare class Paperbit extends EventLoop {
+declare type eventLoopName = "setup" | "draw" | "postDraw";
+declare type eventName = canvasEventName | eventLoopName | mouseEventName | keyboardEventName;
+export declare class Paperbit extends GraphicsAPI {
     protected paperbit: Paperbit;
+    graphics: Graphics;
+    mouse: PaperbitMouse;
+    keyboard: PaperbitKeyboard;
+    frame: Frame;
+    private publishEvent;
+    private eventMng;
     constructor(container?: HTMLElement);
+    protected draw(): Promise<void>;
+    on(eventName: eventName, callback: eventCallback<Paperbit>): void;
+    unsubscribeEvent(eventName: eventName, callback: eventCallback<Paperbit>): void;
 }
 export {};

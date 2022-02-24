@@ -1,7 +1,10 @@
-import { FontAtlas, loadFNT } from "../font"
-import { FrameData, GraphicsAPI } from "./api/graphicsAPI"
+import { FontAtlas, loadFNT } from "./../font"
+import { FrameData } from "./api/graphicsAPI"
+import { Canvas } from "./canvas"
 import { Paperbit } from "./paperbit"
-import { GLBuffer, GLProgram, GLTexture } from "./webGl"
+import { GLBuffer, GLProgram, GLTexture } from "./webGlUtils"
+
+export type canvasEventName = "resize" 
 
 interface Texture {
 	size: [number, number]
@@ -12,40 +15,43 @@ interface Font extends Texture {
 	atlas: FontAtlas
 }
 
-export class Graphics {
+export class Graphics extends Canvas {
 
-	paperbit: Paperbit
+	bit: Paperbit
 
 	protected glProgram: GLProgram
 	protected glBuffer: GLBuffer
 	protected glTextures: GLTexture[] = []
 
-	constructor(paperbit: Paperbit) {
-		this.paperbit = paperbit
+	constructor(bit: Paperbit, publishEvent: (name: canvasEventName) => void, container: HTMLElement) {
+		super(container)
+		this.bit = bit
+		this.onResize = () => publishEvent("resize")
+		this.bit.on("draw", this.checkResize.bind(this))
+		this.bit.on("postDraw", () => this.render(bit.createFrame()))
 
-		this.glProgram = new GLProgram(this.paperbit.gl, shaders[0], shaders[1])
-		this.glBuffer = new GLBuffer(this.paperbit.gl)
-		this.paperbit.gl.enable(this.paperbit.gl.BLEND);
+		this.glProgram = new GLProgram(this.gl, shaders[0], shaders[1])
+		this.glBuffer = new GLBuffer(this.gl)
+		this.gl.enable(this.gl.BLEND);
 		// this.paperbit.gl.blendFuncSeparate(this.paperbit.gl.SRC_ALPHA, this.paperbit.gl.ONE_MINUS_SRC_ALPHA, this.paperbit.gl.ZERO, this.paperbit.gl.ONE);
-		this.paperbit.gl.blendFuncSeparate(this.paperbit.gl.SRC_ALPHA, this.paperbit.gl.ONE_MINUS_SRC_ALPHA, this.paperbit.gl.ONE, this.paperbit.gl.ONE);
-
+		this.gl.blendFuncSeparate(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA, this.gl.ONE, this.gl.ONE);
+		
 		for (let i = 0; i < 8; ++i)
 			this.glProgram.setUniform(`sampler[${i}]`, i)
 	}
 
 	render(frame: FrameData) {
-		this.paperbit.gl.clearColor(1, 1, 1, 1)
-		this.paperbit.gl.clear(this.paperbit.gl.COLOR_BUFFER_BIT)
+		this.gl.clear(this.gl.COLOR_BUFFER_BIT)
 
 		this.glProgram.use()
 		this.glBuffer.update(frame.buffer)
-		this.glProgram.setUniform("screenSize", this.paperbit.frame.size)
+		this.glProgram.setUniform("screenSize", this.bit.frame.size)
 		this.glProgram.setAttribs(["pos", 3], ["texCoord", 2], ["color", 4], ["texId", 1])
-		this.paperbit.gl.drawArrays(this.paperbit.gl.TRIANGLES, 0, frame.verticesCount)
+		this.gl.drawArrays(this.gl.TRIANGLES, 0, frame.verticesCount)
 	}
 
 	async loadTexture(url: string): Promise<Texture> {
-		const tex = new GLTexture(this.paperbit.gl, this.glTextures.length, url)
+		const tex = new GLTexture(this.gl, this.glTextures.length, url)
 		this.glTextures.push(tex)
 		await tex.onLoad()
 		return { slot: tex.slot, size: tex.size }
@@ -125,7 +131,6 @@ void main() {
 			color = vec4(_color.rgb, _color.a * getTextureColor().r);
 			break;
 	}
-	
 	bool isRect = (_texId & 0x80000000)  == 0;
 	if (isRect) return;
 	color = vec4(_color.rgb, smoothstep(0., pixelSize, radius - length(_texCoord)) * clamp(_color.a, 0., 1.));
