@@ -19,7 +19,7 @@ When the PaperbitCanvas request a frame it will fire the needed events (OnStart,
 Once the onDraw returns, it will send to the PaperbitCanvas all the geometry.
 
 This isolation on the canvas and the api let us to create the canvas on the main thread
-and use the api on a [web worker](). 
+and use the api on a [web worker](./graphics/initialize.md#web-worker). 
 
 ## Utilities
 
@@ -29,6 +29,5 @@ When using a graphics library, it is always nice to have some common features in
 - [Geometric](utils/geometry.md) operations
 - [Smooth](utils/smooth_bit.md) the transition of a number
 
-They are not related in any way to the graphics engine, 
-so we could make the same without using them.
+They are not related in any way to the graphics engine.
 The purpose of the utilities is to avoid reinventing the wheel in each project.

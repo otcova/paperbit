@@ -5,8 +5,8 @@ They can be created in various environments.
 
 ## Recommended
 
-The simplest way to do it. Paperbit constructor is creating the canvas on the HTML element that is provided (`document.body`)
-and is also creating an api instance already linked with the canvas. 
+Paperbit constructor is creating the canvas on the HTML element that is provided (`document.body`)
+and is also creating an api instance already linked with the canvas.
 
 ```javascript
 const bit = new Paperbit(document.body)

@@ -4,8 +4,8 @@
   "description": "Fast WebGL utility library",
   "main": "./lib/index.js",
   "scripts": {
-    "doc": "cd ./documentation & mdbook build",
-    "dev-doc": "cd ./documentation & mdbook serve --open",
+    "doc": "cd ./book & mdbook build",
+    "dev-doc": "cd ./book & mdbook serve --open",
     "dev": "tsc --watch",
     "build": "tsc",
     "prepublish": "tsc"

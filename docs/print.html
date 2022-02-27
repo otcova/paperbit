@@ -144,7 +144,15 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
-<p>Paperbit is a library to create grophics with WebGL. It is ideal for creating graphics on the web with Javascript or Typescript. </p>
+<p>Paperbit is a library to create graphics with WebGL.
+Our main goal is to let the programmer develop his own creativity.</p>
+<p>The library gives graphical functions to draw to the canvas,
+and some utilities to accelerate development.</p>
+<h2 id="get-started"><a class="header" href="#get-started">Get Started</a></h2>
+<p>To use Paperbit we need to <a href="./setup_a_project.html">setup a project</a>
+and understand the <a href="./core_concepts.html">core concepts</a>.</p>
+<h2 id="contributing"><a class="header" href="#contributing">Contributing</a></h2>
+<p>Feel free to create a <a href="https://github.com/otcova/paperbit/pulls">pull request</a> to improve this documentation.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="setup-a-project"><a class="header" href="#setup-a-project">Setup a Project</a></h1>
 <p>Paperbit is not restricted to any framework, 
 here we let you choose the one which you are most comfortable with.</p>
@@ -281,7 +289,7 @@ when a frame call is complete it sends to the gpu all the data in a single draw 
 When the PaperbitCanvas request a frame it will fire the needed events (OnStart, onDraw, onMouseMove ...).
 Once the onDraw returns, it will send to the PaperbitCanvas all the geometry.</p>
 <p>This isolation on the canvas and the api let us to create the canvas on the main thread
-and use the api on a <a href="">web worker</a>. </p>
+and use the api on a <a href="./graphics/initialize.html#web-worker">web worker</a>. </p>
 <h2 id="utilities"><a class="header" href="#utilities">Utilities</a></h2>
 <p>When using a graphics library, it is always nice to have some common features in our disposal:</p>
 <ul>
@@ -290,15 +298,14 @@ and use the api on a <a href="">web worker</a>. </p>
 <li><a href="utils/geometry.html">Geometric</a> operations</li>
 <li><a href="utils/smooth_bit.html">Smooth</a> the transition of a number</li>
 </ul>
-<p>They are not related in any way to the graphics engine, 
-so we could make the same without using them.
+<p>They are not related in any way to the graphics engine.
 The purpose of the utilities is to avoid reinventing the wheel in each project.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="initialize-paperbit"><a class="header" href="#initialize-paperbit">Initialize Paperbit</a></h1>
 <p>A Paperbit context consist in the Paperbit canvas, and the Paperbit API.
 They can be created in various environments.</p>
 <h2 id="recommended"><a class="header" href="#recommended">Recommended</a></h2>
-<p>The simplest way to do it. Paperbit constructor is creating the canvas on the HTML element that is provided (<code>document.body</code>)
-and is also creating an api instance already linked with the canvas. </p>
+<p>Paperbit constructor is creating the canvas on the HTML element that is provided (<code>document.body</code>)
+and is also creating an api instance already linked with the canvas.</p>
 <pre><code class="language-javascript">const bit = new Paperbit(document.body)
 const { ellipse, mouse } = bit.api
 
@@ -374,6 +381,20 @@ api.onDraw = () =&gt; {
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

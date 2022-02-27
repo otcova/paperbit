@@ -159,7 +159,7 @@ when a frame call is complete it sends to the gpu all the data in a single draw 
 When the PaperbitCanvas request a frame it will fire the needed events (OnStart, onDraw, onMouseMove ...).
 Once the onDraw returns, it will send to the PaperbitCanvas all the geometry.</p>
 <p>This isolation on the canvas and the api let us to create the canvas on the main thread
-and use the api on a <a href="">web worker</a>. </p>
+and use the api on a <a href="./graphics/initialize.html#web-worker">web worker</a>. </p>
 <h2 id="utilities"><a class="header" href="#utilities">Utilities</a></h2>
 <p>When using a graphics library, it is always nice to have some common features in our disposal:</p>
 <ul>
@@ -168,8 +168,7 @@ and use the api on a <a href="">web worker</a>. </p>
 <li><a href="utils/geometry.html">Geometric</a> operations</li>
 <li><a href="utils/smooth_bit.html">Smooth</a> the transition of a number</li>
 </ul>
-<p>They are not related in any way to the graphics engine, 
-so we could make the same without using them.
+<p>They are not related in any way to the graphics engine.
 The purpose of the utilities is to avoid reinventing the wheel in each project.</p>
 
                     </main>
@@ -201,6 +200,20 @@ The purpose of the utilities is to avoid reinventing the wheel in each project.<
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

@@ -146,8 +146,8 @@
 <p>A Paperbit context consist in the Paperbit canvas, and the Paperbit API.
 They can be created in various environments.</p>
 <h2 id="recommended"><a class="header" href="#recommended">Recommended</a></h2>
-<p>The simplest way to do it. Paperbit constructor is creating the canvas on the HTML element that is provided (<code>document.body</code>)
-and is also creating an api instance already linked with the canvas. </p>
+<p>Paperbit constructor is creating the canvas on the HTML element that is provided (<code>document.body</code>)
+and is also creating an api instance already linked with the canvas.</p>
 <pre><code class="language-javascript">const bit = new Paperbit(document.body)
 const { ellipse, mouse } = bit.api
 
@@ -231,6 +231,20 @@ api.onDraw = () =&gt; {
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 
