@@ -1,7 +1,7 @@
 import { Graphics } from "./graphics";
 import { PaperbitKeyboard } from "./keyboard";
 import { PaperbitMouse } from "./mouse";
-import { GraphicsAPI } from "./api/graphicsAPI";
+import { PaperbitAPI as PaperbitAPI } from "./api/graphicsAPI";
 import { ResultFrameData, StartFrameData } from "./interfaces";
 
 
@@ -9,7 +9,7 @@ export class Paperbit {
 
 	protected paperbit: Paperbit = this;
 
-	api!: GraphicsAPI
+	api!: PaperbitAPI
 	private doFrame!: (frameData: StartFrameData) => Promise<ResultFrameData> | ResultFrameData
 
 	graphics: Graphics
@@ -18,7 +18,7 @@ export class Paperbit {
 
 	constructor(container: HTMLElement = document.body, doFrame?: (frameData: StartFrameData) => Promise<ResultFrameData> | ResultFrameData) {
 		if (doFrame) this.doFrame = doFrame
-		else this.api = new GraphicsAPI(f => this.doFrame = f)
+		else this.api = new PaperbitAPI(f => this.doFrame = f)
 		
 		this.graphics = new Graphics(container)
 		this.mouse = new PaperbitMouse(this.graphics.canvas)

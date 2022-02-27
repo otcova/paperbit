@@ -1,9 +1,11 @@
 {
   "name": "paperbit",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Fast WebGL utility library",
   "main": "./lib/index.js",
   "scripts": {
+    "doc": "cd ./documentation & mdbook build",
+    "dev-doc": "cd ./documentation & mdbook serve --open",
     "dev": "tsc --watch",
     "build": "tsc",
     "prepublish": "tsc"

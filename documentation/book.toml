@@ -1,0 +1,9 @@
+[book]
+authors = ["otcova"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Paperbit Documentation"
+
+[output.html]
+default-theme = "rust"

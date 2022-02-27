@@ -7,14 +7,14 @@ import { Mouse } from "./mouse"
 export type beforeFrameCallback = (data: StartFrameData) => void
 export type afterFrameCallback = () => void
 
-export class GraphicsAPI extends GraphicsFunctions {
+export class PaperbitAPI extends GraphicsFunctions {
 	
 	frame: Frame
 	mouse: Mouse
 	keyboard: Keyboard
 	
-	onStart?: (api: GraphicsAPI) => Promise<void> | void
-	onDraw?: (api: GraphicsAPI) => void
+	onStart?: (api: PaperbitAPI) => Promise<void> | void
+	onDraw?: (api: PaperbitAPI) => void
 	
 	private beforeFrameCallbacks: beforeFrameCallback[] = []
 	

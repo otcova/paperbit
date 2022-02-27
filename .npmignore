@@ -1,7 +1,6 @@
 documentation
 src
 .npmignore
-README.md
 tsconfig.json
 tests
 .gitignore

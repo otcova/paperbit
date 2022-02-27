@@ -1,4 +1,4 @@
-import { GraphicsAPI } from "./api/graphicsAPI"
+import { PaperbitAPI } from "./api/graphicsAPI"
 
 export abstract class Canvas {
 
