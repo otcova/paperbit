@@ -1,22 +1,13 @@
-import { canvasEventName, Graphics } from "./graphics";
-import { Frame } from "./eventLoop";
-import { keyboardEventsNames as keyboardEventName, PaperbitKeyboard } from "./keyboard";
-import { mouseEventName, PaperbitMouse } from "./mouse";
-import { eventCallback } from "./eventsMng";
+import { Graphics } from "./graphics";
 import { GraphicsAPI } from "./api/graphicsAPI";
-declare type eventLoopName = "setup" | "draw" | "postDraw";
-declare type eventName = canvasEventName | eventLoopName | mouseEventName | keyboardEventName;
-export declare class Paperbit extends GraphicsAPI {
+import { ResultFrameData, StartFrameData } from "./interfaces";
+export declare class Paperbit {
     protected paperbit: Paperbit;
+    api: GraphicsAPI;
+    private doFrame;
     graphics: Graphics;
-    mouse: PaperbitMouse;
-    keyboard: PaperbitKeyboard;
-    frame: Frame;
-    private publishEvent;
-    private eventMng;
-    constructor(container?: HTMLElement);
+    private mouse;
+    private keyboard;
+    constructor(container?: HTMLElement, doFrame?: (frameData: StartFrameData) => Promise<ResultFrameData> | ResultFrameData);
     protected draw(): Promise<void>;
-    on(eventName: eventName, callback: eventCallback<Paperbit>): void;
-    unsubscribeEvent(eventName: eventName, callback: eventCallback<Paperbit>): void;
 }
-export {};

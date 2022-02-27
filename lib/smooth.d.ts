@@ -1,9 +1,11 @@
-export declare class Smooth {
-    past: number;
-    target: number;
-    t0: number;
-    t2: number;
-    constructor(defaultValue: number);
-    goto(value: number, t2?: number): this;
-    get(): number;
+export declare class SmoothBit {
+    duration: number;
+    zero: number;
+    one: number;
+    private t0;
+    private target;
+    constructor(zero?: number, one?: number, duration?: number);
+    set(value: boolean): this;
+    get(zero?: number, one?: number): number;
+    private get currenTime();
 }

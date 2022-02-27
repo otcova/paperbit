@@ -35,6 +35,7 @@ export declare class GraphicsStateStack {
     get rectOrigin(): Origin;
     set matrix(mat: number[]);
     get matrix(): number[];
+    get inverseMatrix(): number[];
     set textOrigin(origin: Origin);
     get textOrigin(): Origin;
     rotateX(angle: number): void;
@@ -46,8 +47,7 @@ export declare class GraphicsStateStack {
     scale(x: number, y: number, z: number): void;
     translate(x: number, y: number): void;
     translate(x: number, y: number, z: number): void;
-    push(): void;
-    pop(): void;
+    scope(scopedCode: () => void): void;
     private get current();
     reset(): void;
 }

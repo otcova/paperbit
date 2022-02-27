@@ -1,58 +1,84 @@
-import { canvasEventName, Graphics } from "./graphics";
-import { Frame } from "./eventLoop";
-import { keyboardEventsNames as keyboardEventName, PaperbitKeyboard } from "./keyboard";
-import { mouseEventName, PaperbitMouse } from "./mouse";
-import { eventCallback, EventMng } from "./eventsMng";
+import { Graphics } from "./graphics";
+import { PaperbitKeyboard } from "./keyboard";
+import { PaperbitMouse } from "./mouse";
 import { GraphicsAPI } from "./api/graphicsAPI";
+import { ResultFrameData, StartFrameData } from "./interfaces";
 
 
-type eventLoopName = "setup" | "draw" | "postDraw"
-
-type eventName =
-	canvasEventName |
-	eventLoopName |
-	mouseEventName |
-	keyboardEventName
-
-
-export class Paperbit extends GraphicsAPI {
+export class Paperbit {
 
 	protected paperbit: Paperbit = this;
 
+	api!: GraphicsAPI
+	private doFrame!: (frameData: StartFrameData) => Promise<ResultFrameData> | ResultFrameData
+
 	graphics: Graphics
-	mouse: PaperbitMouse
-	keyboard: PaperbitKeyboard
+	private mouse: PaperbitMouse
+	private keyboard: PaperbitKeyboard
 
-	frame: Frame
-
-	private publishEvent
-	private eventMng = new EventMng<eventName, Paperbit>()
-
-	constructor(container: HTMLElement = document.body) {
-		super()
-
-		this.publishEvent = (name: eventName) => this.eventMng.publish(name, this)
-
-		this.graphics = new Graphics(this.paperbit, this.publishEvent, container)
-		this.mouse = new PaperbitMouse(this, this.publishEvent)
-		this.keyboard = new PaperbitKeyboard(this, this.publishEvent)
-		this.frame = new Frame(this.paperbit)
-
-		setTimeout(() => this.publishEvent("setup").then(this.draw.bind(this)), 0)
+	constructor(container: HTMLElement = document.body, doFrame?: (frameData: StartFrameData) => Promise<ResultFrameData> | ResultFrameData) {
+		if (doFrame) this.doFrame = doFrame
+		else this.api = new GraphicsAPI(f => this.doFrame = f)
+		
+		this.graphics = new Graphics(container)
+		this.mouse = new PaperbitMouse(this.graphics.canvas)
+		this.keyboard = new PaperbitKeyboard(this.graphics.canvas)
+		
+		setTimeout(this.draw.bind(this), 0)
 	}
 
 	protected async draw() {
-		await this.publishEvent("draw")
-		await this.publishEvent("postDraw")
+		this.graphics.render(await this.doFrame({
+			canvasSize: this.graphics.resize(),
+			mouse: this.mouse.pullData(),
+			keyboard: this.keyboard.pullData(),
+		}))
 		requestAnimationFrame(this.draw.bind(this))
 	}
-
-	on(eventName: eventName, callback: eventCallback<Paperbit>) {
-		this.eventMng.subscribe(eventName, callback)
-	}
-	unsubscribeEvent(eventName: eventName, callback: eventCallback<Paperbit>) {
-		this.eventMng.unsubscribe(eventName, callback)
-	}
-
 }
 
+// {
+// 	const bit = new Paperbit(document.body)
+	
+// 	const { mouse, ellipse } = bit.api
+
+// 	bit.api.onDraw = () => {
+// 		ellipse(...mouse.pos, .1)
+// 	}
+// }
+
+// {
+// 	let doFrame!: (frameData: StartFrameData) => ResultFrameData
+// 	const api = new GraphicsAPI(f => doFrame = f)
+// 	const bit = new Paperbit(document.body, doFrame)
+// 	const { mouse, ellipse } = api
+
+// 	api.onDraw = () => {
+// 		ellipse(...mouse.pos, .1)
+// 	}
+// }
+
+// {
+// 	{
+// 		let doFrame: (frameData: StartFrameData) => ResultFrameData
+// 		const api = new GraphicsAPI((f) => doFrame = f)
+
+// 		onmessage = (event) => {
+// 			if (event.data.type == "doFrame") doFrame(event.data.frameData)
+// 		}
+// 	}
+// 	{
+// 		let framePromise: (data: ResultFrameData) => void
+// 		const bit = new Paperbit(document.body, frameData => {
+// 			postMessage({
+// 				type: "doFrame",
+// 				frameData: frameData
+// 			})
+// 			return new Promise<ResultFrameData>(r => framePromise = r)
+// 		})
+
+// 		onmessage = (event) => {
+// 			if (event.data.type == "frameResult") framePromise(event.data.frameData)
+// 		}
+// 	}
+// }

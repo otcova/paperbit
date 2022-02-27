@@ -1,55 +1,45 @@
-export class Smooth {
-	
-	past: number
-	target: number
-	t0: number = -Infinity
-	t2: number = 0
-	
-	constructor(defaultValue: number) {
-		this.past = defaultValue
-		this.target = defaultValue
+export class SmoothBit {
+
+	duration: number
+	zero: number
+	one: number
+
+	private t0 = 0
+	private target = false
+
+	constructor(zero = 0, one = 1, duration: number = 1/4) {
+		this.duration = duration
+		this.zero = zero
+		this.one = one
+		this.t0 = this.currenTime
 	}
-	
-	goto(value: number, t2: number = 0.1) {
-		this.t2 = t2
-		this.past = this.get()
-		this.target = value
-		this.t0 = performance.now() / 1000
+	set(value: boolean) {
+		if (this.target != value) {
+			this.target = value
+			const dt = (this.currenTime - this.t0) / this.duration
+			if (dt > 1) this.t0 = this.currenTime
+			else this.t0 = this.currenTime - (1 - dt)
+		}
 		return this
 	}
-	
-	get() {
-		const now = performance.now() / 1000 - this.t0
-		if (now > this.t2) return this.target
-		return this.past + (this.target - this.past) * now / this.t2
+
+	get(zero?: number, one?: number) {
+		zero ??= this.zero
+		one ??= this.one
+
+		const dt = (this.currenTime - this.t0) / this.duration
+		if (dt >= 1) return this.target ? this.one : this.zero
+		let x = easeInOutSine(dt)
+		if (!this.target) x = 1 - x
+		x = zero + x * (one - zero)
+		return x
+	}
+
+	private get currenTime() {
+		return performance.now() / 1000
 	}
 }
 
-// export class Smooth {
-	
-// 	past: number
-// 	target: number
-// 	t0: number = 0
-// 	v: number = 1
-	
-// 	constructor(defaultValue: number = 0) {
-// 		this.past = defaultValue
-// 		this.target = defaultValue
-// 	}
-	
-// 	goto(target: number, v: number = 1) {
-// 		this.past = this.get()
-// 		this.v = Math.abs(v) * Math.sign(target - this.past)
-// 		this.target = target
-// 		this.t0 = performance.now() / 1000
-// 		return this
-// 	}
-	
-// 	get() {
-// 		const now = performance.now() / 1000 - this.t0
-// 		const x1 = this.past + this.v * now
-// 		if (this.past <= this.target && this.target <= x1) return this.target
-// 		if (x1 <= this.target && this.target <= this.past) return this.target
-// 		return x1
-// 	}
-// }
+function easeInOutSine(x: number): number {
+	return -(Math.cos(Math.PI * x) - 1) / 2;
+}

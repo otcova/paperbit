@@ -1,6 +1,6 @@
 import { FontAtlas, loadFNT } from "./../font"
-import { FrameData } from "./api/graphicsAPI"
 import { Canvas } from "./canvas"
+import { ResultFrameData } from "./interfaces"
 import { Paperbit } from "./paperbit"
 import { GLBuffer, GLProgram, GLTexture } from "./webGlUtils"
 
@@ -17,19 +17,13 @@ interface Font extends Texture {
 
 export class Graphics extends Canvas {
 
-	bit: Paperbit
-
 	protected glProgram: GLProgram
 	protected glBuffer: GLBuffer
 	protected glTextures: GLTexture[] = []
 
-	constructor(bit: Paperbit, publishEvent: (name: canvasEventName) => void, container: HTMLElement) {
+	constructor(container: HTMLElement) {
 		super(container)
-		this.bit = bit
-		this.onResize = () => publishEvent("resize")
-		this.bit.on("draw", this.checkResize.bind(this))
-		this.bit.on("postDraw", () => this.render(bit.createFrame()))
-
+		
 		this.glProgram = new GLProgram(this.gl, shaders[0], shaders[1])
 		this.glBuffer = new GLBuffer(this.gl)
 		this.gl.enable(this.gl.BLEND);
@@ -40,12 +34,12 @@ export class Graphics extends Canvas {
 			this.glProgram.setUniform(`sampler[${i}]`, i)
 	}
 
-	render(frame: FrameData) {
+	render(frame: ResultFrameData) {
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT)
 
 		this.glProgram.use()
 		this.glBuffer.update(frame.buffer)
-		this.glProgram.setUniform("screenSize", this.bit.frame.size)
+		this.glProgram.setUniform("screenSize", [this.canvas.width, this.canvas.height])
 		this.glProgram.setAttribs(["pos", 3], ["texCoord", 2], ["color", 4], ["texId", 1])
 		this.gl.drawArrays(this.gl.TRIANGLES, 0, frame.verticesCount)
 	}

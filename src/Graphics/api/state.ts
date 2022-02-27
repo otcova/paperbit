@@ -65,7 +65,7 @@ class GraphicsState {
 			this.rectOrigin = [0, 0]
 			this.rectUV = [0, 0, 1, 1]
 			
-			this.textOrigin = [0, 0]
+			this.textOrigin = [0, -1]
 		}
 	}
 }
@@ -112,6 +112,7 @@ export class GraphicsStateStack {
 
 	set matrix(mat: number[]) { this.current.matrix = mat }
 	get matrix() { return this.current.matrix }
+	get inverseMatrix() { return matrix.invert4x4(this.current.matrix)}
 	
 	set textOrigin(origin: Origin) { this.current.textOrigin = origin }
 	get textOrigin() { return this.current.textOrigin }
@@ -181,9 +182,14 @@ export class GraphicsStateStack {
 	translate(x: number, y: number, z: number = 0) {
 		this.current.matrix = matrix.dot(this.current.matrix, 4, [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x, y, z, 1], 4)
 	}
-
-	push() { this.stateStack.push(new GraphicsState(this.current)) }
-	pop() { this.stateStack.pop() }
+	
+	scope(scopedCode: () => void) {
+		this.stateStack.push(new GraphicsState(this.current))
+		scopedCode()
+		this.stateStack.pop()
+	}
+	// push() { this.stateStack.push(new GraphicsState(this.current)) }
+	// pop() { this.stateStack.pop() }
 
 	private get current() { return this.stateStack[this.stateStack.length - 1] }
 	reset() { this.stateStack = [new GraphicsState()] }

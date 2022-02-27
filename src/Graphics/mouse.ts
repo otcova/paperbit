@@ -1,59 +1,59 @@
 import { Canvas } from "./canvas"
+import { MouseData } from "./interfaces"
 import { Paperbit } from "./paperbit"
 
-export type mouseEventName = "mouse" | "mouseDown" | "mouseDown" | "mouseUp" | "mouseMove" | "mouseWheel"
+export class PaperbitMouse implements MouseData {
 
-class Mouse {
 	pos: [number, number] = [0, 0]
 	left = 0
 	right = 0
 	middle = 0
 	wheel = 0
-};
-
-export class PaperbitMouse extends Mouse {
-
-	past = new Mouse()
-	delta = new Mouse()
 	
-	private bit
-	private publishEvent
+	private offsetLeft = 0
+	private offsetMiddle = 0
+	private offsetRight = 0
 	
-	constructor(bit: Paperbit, publishEvent: (name: mouseEventName) => void) {
-		super()
-		this.bit = bit
-		this.publishEvent = publishEvent
-		
-		bit.graphics.canvas.onmousedown = e => { this.updateMouse(e); this.publishEvent("mouseDown") }
-		bit.graphics.canvas.onmouseup = e => { this.updateMouse(e); this.publishEvent("mouseUp") }
-		bit.graphics.canvas.onmousemove = e => { this.updateMouse(e); this.publishEvent("mouseMove") }
-		bit.graphics.canvas.onwheel = e => { this.updateMouse(e); this.publishEvent("mouseWheel") }
+	private canvas: HTMLCanvasElement
+	
+	constructor(canvas: HTMLCanvasElement) {
+		this.canvas = canvas
+		document.addEventListener("mousedown", e => this.updateButtons(e))
+		document.addEventListener("mouseup", e => this.updateButtons(e))
+		document.addEventListener("mousemove", e => this.updateMouse(e))
+		this.canvas.onwheel = e => this.updateWheel(e)
 	}
 
-	protected updateMouse(e?: MouseEvent | WheelEvent) {
-
-		if (e) {
-			const minDim = Math.min(this.bit.graphics.canvas.width, this.bit.graphics.canvas.height)
-			this.pos = [(2 * e.clientX - this.bit.graphics.canvas.width) / minDim, (this.bit.graphics.canvas.height - 2 * e.clientY) / minDim]
-			this.left = e.buttons & 1
-			this.right = (e.buttons >> 1) & 1
-			this.middle = (e.buttons >> 2) & 1
-			this.wheel = this.wheel + (e instanceof WheelEvent ? e.deltaY / 100 : 0)
-		}
-
-		this.delta.pos[0] = this.pos[0] - this.past.pos[0]
-		this.delta.pos[1] = this.pos[1] - this.past.pos[1]
-		this.delta.left = this.left - this.past.left
-		this.delta.right = this.right - this.past.right
-		this.delta.middle = this.middle - this.past.middle
-		this.delta.wheel = this.wheel - this.past.wheel
-
-		this.past.pos = this.pos
-		this.past.left = this.left
-		this.past.right = this.right
-		this.past.middle = this.middle
-		this.past.wheel = this.wheel
+	protected updateMouse(e: MouseEvent) {
+		const minDim = Math.min(this.canvas.width, this.canvas.height)
+		this.pos = [(2 * e.clientX - this.canvas.width) / minDim, (this.canvas.height - 2 * e.clientY) / minDim]
 		
-		this.publishEvent("mouse")
+		if (((e.buttons & 1) == 0) != (this.left % 2 == 0)) ++this.left
+		if (((e.buttons & 2) == 0) != (this.right % 2 == 0)) ++this.right
+		if (((e.buttons & 4) == 0) != (this.middle % 2 == 0)) ++this.middle
+	}
+	
+	private updateButtons(e: MouseEvent) {
+		if ((((e.buttons & 1) == 0) != (this.left % 2 == 0)) && e.button == 0) this.left += 1
+		else if((((e.buttons & 4) == 0) != (this.left % 2 == 0)) && e.button == 1) this.middle += 1
+		else if ((((e.buttons & 2) == 0) != (this.left % 2 == 0)) && e.button == 2) this.right += 1
+	}
+	
+	private updateWheel(e: WheelEvent) {
+		this.wheel = this.wheel + (e instanceof WheelEvent ? e.deltaY / 100 : 0)		
+	}
+	
+	pullData(): MouseData {
+		let data = {
+			pos: this.pos,
+			wheel: this.wheel,
+			left: this.left - this.offsetLeft,
+			middle: this.middle - this.offsetMiddle,
+			right: this.right - this.offsetRight,
+		}
+		this.offsetLeft = this.left
+		this.middle = this.middle
+		this.right = this.right
+		return data
 	}
 }

@@ -18,7 +18,7 @@ class Vec {
 	new<N extends number, T extends number[] | Tuple<number, N>>(length: number | T, callback: (i: number) => number): T;
 	new<N extends number, T extends number[] | Tuple<number, N>>(length: number, defaultValue: number): T;
 	new<N extends number, T extends number[] | Tuple<number, N>>(length: number | T, value: number | ((i: number) => number) = 0): T {
-		const array = Array(typeof length == "number"? length : length.length) as T
+		const array = Array(typeof length == "number" ? length : length.length) as T
 		if (typeof value == "number") return array.fill(value) as T
 		for (let i = 0; i < array.length; ++i) array[i] = value(i)
 		return array
@@ -51,7 +51,7 @@ class Vec {
 		// @ts-ignore
 		return this.new(len, i => vectors.reduce((sum, v) => sum / (v?.[i] ?? v), v?.[i] ?? v))
 	}
-	
+
 	// singel vector
 	round(v: number[]) {
 		return this.new(v, i => Math.round(v[i]))
@@ -62,13 +62,13 @@ class Vec {
 	ceil(v: number[]) {
 		return this.new(v, i => Math.ceil(v[i]))
 	}
-	
+
 	//spatial
 	dist(a: number[], b: number[]) {
 		if (a.length != b.length) throw Error("Invalid arguments")
 		return vec.length(vec.sub(a, b))
 	}
-	
+
 	// vectorial
 	dot(v: number[], u: number[]) {
 		if (v.length != u.length) throw Error("Invalid arguments")
@@ -136,6 +136,53 @@ class Matrix {
 				n += matA[y + i * matAHeight] * (i < matBHeight ? matB[i + x * matBHeight] : 1)
 			return n
 		})
+	}
+
+	invert4x4(m: number[]) {
+		const A2323 = m[10] * m[15] - m[11] * m[14];
+		const A1323 = m[9] * m[15] - m[11] * m[13];
+		const A1223 = m[9] * m[14] - m[10] * m[13];
+		const A0323 = m[8] * m[15] - m[11] * m[12];
+		const A0223 = m[8] * m[14] - m[10] * m[12];
+		const A0123 = m[8] * m[13] - m[9] * m[12];
+		const A2313 = m[6] * m[15] - m[7] * m[14];
+		const A1313 = m[5] * m[15] - m[7] * m[13];
+		const A1213 = m[5] * m[14] - m[6] * m[13];
+		const A2312 = m[6] * m[11] - m[7] * m[10];
+		const A1312 = m[5] * m[11] - m[7] * m[9];
+		const A1212 = m[5] * m[10] - m[6] * m[9];
+		const A0313 = m[4] * m[15] - m[7] * m[12];
+		const A0213 = m[4] * m[14] - m[6] * m[12];
+		const A0312 = m[4] * m[11] - m[7] * m[8];
+		const A0212 = m[4] * m[10] - m[6] * m[8];
+		const A0113 = m[4] * m[13] - m[5] * m[12];
+		const A0112 = m[4] * m[9] - m[5] * m[8];
+
+		let det = m[0] * (m[5] * A2323 - m[6] * A1323 + m[7] * A1223)
+			- m[1] * (m[4] * A2323 - m[6] * A0323 + m[7] * A0223)
+			+ m[2] * (m[4] * A1323 - m[5] * A0323 + m[7] * A0123)
+			- m[3] * (m[4] * A1223 - m[5] * A0223 + m[6] * A0123);
+			
+		det = 1 / det
+
+		return [
+			det * (m[5] * A2323 - m[6] * A1323 + m[7] * A1223),
+			det * - (m[1] * A2323 - m[2] * A1323 + m[3] * A1223),
+			det * (m[1] * A2313 - m[2] * A1313 + m[3] * A1213),
+			det * - (m[1] * A2312 - m[2] * A1312 + m[3] * A1212),
+			det * - (m[4] * A2323 - m[6] * A0323 + m[7] * A0223),
+			det * (m[0] * A2323 - m[2] * A0323 + m[3] * A0223),
+			det * - (m[0] * A2313 - m[2] * A0313 + m[3] * A0213),
+			det * (m[0] * A2312 - m[2] * A0312 + m[3] * A0212),
+			det * (m[4] * A1323 - m[5] * A0323 + m[7] * A0123),
+			det * - (m[0] * A1323 - m[1] * A0323 + m[3] * A0123),
+			det * (m[0] * A1313 - m[1] * A0313 + m[3] * A0113),
+			det * - (m[0] * A1312 - m[1] * A0312 + m[3] * A0112),
+			det * - (m[4] * A1223 - m[5] * A0223 + m[6] * A0123),
+			det * (m[0] * A1223 - m[1] * A0223 + m[2] * A0123),
+			det * - (m[0] * A1213 - m[1] * A0213 + m[2] * A0113),
+			det * (m[0] * A1212 - m[1] * A0212 + m[2] * A0112),
+		]
 	}
 }
 

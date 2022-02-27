@@ -26,6 +26,7 @@ declare class Matrix {
     div(matA: number[], matB: number[]): number | number[];
     dot(matA: number[], matAWidth: number, matB: number[], matBWidth: number): number[];
     dot(matA: number[], matAWidth: number, vector: number[]): number[];
+    invert4x4(m: number[]): number[];
 }
 export declare const vec: Vec;
 export declare const matrix: Matrix;

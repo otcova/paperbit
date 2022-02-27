@@ -1,7 +1,8 @@
-import { Paperbit } from "./paperbit";
-export declare type keyboardEventsNames = "keyPress" | "keyDown" | "keyUp";
-export declare class PaperbitKeyboard {
-    private publishEvent;
-    constructor(bit: Paperbit, publishEvent: (name: keyboardEventsNames) => void);
+import { KeyboardData } from "./interfaces";
+export declare class PaperbitKeyboard implements KeyboardData {
+    keys: Map<string, number>;
+    typed: string;
+    constructor(cavnas: HTMLCanvasElement);
     private updateKey;
+    pullData(): KeyboardData;
 }
