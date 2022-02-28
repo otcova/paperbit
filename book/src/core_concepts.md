@@ -15,7 +15,7 @@ When a frame request is complete, it sends to the gpu all the geometry in a sing
 2. **PaperbitAPI**
 
 When using Paperbit the 99.9% of the time we are going to interact with the PaperbitAPI.
-Is the responsible of creating the frame data. 
+It is the responsible of creating the frame data. 
 When the PaperbitCanvas request a frame, PaperbitAPI will fire the needed events (OnStart, onDraw, onMouseMove, ...).
 Once all event returns, it will return to the PaperbitCanvas all the geometry.
 
