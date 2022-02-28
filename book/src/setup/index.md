@@ -4,6 +4,6 @@ Paperbit is not restricted to any framework,
 here we let you choose the one which you are most comfortable with.
 
 
-* [Webpack](./setup/webpack.md)
-* [HTML](./setup/html.md)
-* [React](./setup/react.md)
+* [Webpack](./webpack.md)
+* [HTML](./html.md)
+* [React](./react.md)
