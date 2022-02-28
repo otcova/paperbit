@@ -5,7 +5,7 @@ module.exports = {
 	// devtool: 'source-map',
 	entry: './lib/index.js',
 	output: {
-		filename: 'index.js',
+		filename: 'paperbit.js',
 		path: path.resolve(__dirname, 'bundle'),
 		library: 'paperbit',
 		libraryTarget: 'umd'

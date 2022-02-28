@@ -10,7 +10,11 @@ export declare class PaperbitMouse implements MouseData {
     private offsetRight;
     private canvas;
     constructor(canvas: HTMLCanvasElement);
-    protected updateMouse(e: MouseEvent): void;
+    protected updateMouse(e: {
+        clientX: number;
+        clientY: number;
+        buttons: number;
+    }): void;
     private updateButtons;
     private updateWheel;
     pullData(): MouseData;

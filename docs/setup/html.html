@@ -172,7 +172,7 @@ we need to add that
 <a href="#" onclick="
 	if (!this.download) {
 		event.preventDefault();
-		fetch('https:\/\/raw.githubusercontent.com/otcova/paperbit/main/bundle/index.js')
+		fetch('https:\/\/raw.githubusercontent.com/otcova/paperbit/main/bundle/paperbit.js')
 		.then(response => response.blob())
 		.then(blob => {
 			this.href = window.URL.createObjectURL(blob);

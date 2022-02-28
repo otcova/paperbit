@@ -22,9 +22,12 @@ export class PaperbitMouse implements MouseData {
 		this.canvas.onwheel = e => this.updateWheel(e)
 	}
 
-	protected updateMouse(e: MouseEvent) {
+	protected updateMouse(e: {clientX: number, clientY: number, buttons: number}) {
 		const minDim = Math.min(this.canvas.width, this.canvas.height)
-		this.pos = [(2 * e.clientX - this.canvas.width) / minDim, (this.canvas.height - 2 * e.clientY) / minDim]
+		this.pos = [
+			(2 * (e.clientX - this.canvas.offsetLeft + window.scrollX) - this.canvas.width) / minDim, 
+			(this.canvas.height - 2 * (e.clientY - this.canvas.offsetTop + window.scrollY)) / minDim
+		]
 		
 		if (((e.buttons & 1) == 0) != (this.left % 2 == 0)) ++this.left
 		if (((e.buttons & 2) == 0) != (this.right % 2 == 0)) ++this.right
@@ -38,6 +41,7 @@ export class PaperbitMouse implements MouseData {
 	}
 	
 	private updateWheel(e: WheelEvent) {
+		this.updateMouse(e)
 		this.wheel = this.wheel + (e instanceof WheelEvent ? e.deltaY / 100 : 0)		
 	}
 	

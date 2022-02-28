@@ -197,7 +197,7 @@ we need to add that
 <a href="setup/html.html#" onclick="
 	if (!this.download) {
 		event.preventDefault();
-		fetch('https:\/\/raw.githubusercontent.com/otcova/paperbit/main/bundle/index.js')
+		fetch('https:\/\/raw.githubusercontent.com/otcova/paperbit/main/bundle/paperbit.js')
 		.then(response => response.blob())
 		.then(blob => {
 			this.href = window.URL.createObjectURL(blob);
@@ -502,7 +502,18 @@ the color, texture, and other configurations are managed by the <a href="ref/api
 <li><a href="ref/api/graphic-functions/./triangle-strip.html">triangleStrip</a> — Draw a triangle strip from a list of coordinates</li>
 <li><a href="ref/api/graphic-functions/./line.html">line</a> — Draw a line from a list of coordinates</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="rectangle"><a class="header" href="#rectangle">Rectangle</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><script src="../../../code/paperbit-util.js" type="module" defer></script>
+<h1 id="rectangle"><a class="header" href="#rectangle">Rectangle</a></h1>
+<pre><code class="language-javascript">const { rect, mouse } = canvas.api
+</code></pre>
+<div class="paperbit">
+<pre><code class="language-javascript">rect(0, 0, .6)
+</code></pre>
+</div>
+<div class="paperbit">
+<pre><code class="language-javascript">rect(...mouse.pos, 1, .6)
+</code></pre>
+</div>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ellipse"><a class="header" href="#ellipse">Ellipse</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="triangle"><a class="header" href="#triangle">Triangle</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="triangle-strip"><a class="header" href="#triangle-strip">Triangle Strip</a></h1>
