@@ -1,6 +1,7 @@
-documentation
+book
+docs
 src
-.npmignore
-tsconfig.json
 tests
 .gitignore
+.npmignore
+tsconfig.json

@@ -15,8 +15,6 @@ export declare class GraphicsStateStack {
     get colorHex(): [number, number, number, number];
     set colorAlpha(alpha: number);
     get colorAlpha(): number;
-    set lineColor(c: number[] | number);
-    get lineColor(): number[] | number;
     set lineWidth(width: number);
     get lineWidth(): number;
     set lineCap(type: "round" | "square" | "butt");
@@ -25,6 +23,8 @@ export declare class GraphicsStateStack {
     get lineJoin(): "round" | "miter" | "bevel" | "none";
     set font(font: null | FontType);
     get font(): null | FontType;
+    set textOrigin(origin: Origin);
+    get textOrigin(): Origin;
     set texture(tex: null | TextureType);
     get texture(): null | TextureType;
     set textureColorBlend(algorithm: "+" | "*" | "*r");
@@ -36,8 +36,6 @@ export declare class GraphicsStateStack {
     set matrix(mat: number[]);
     get matrix(): number[];
     get inverseMatrix(): number[];
-    set textOrigin(origin: Origin);
-    get textOrigin(): Origin;
     rotateX(angle: number): void;
     rotateY(angle: number): void;
     rotateZ(angle: number): void;
