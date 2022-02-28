@@ -5,6 +5,7 @@
 	- [Webpack](./setup/webpack.md)
 	- [React](./setup/react.md)
 - [Core Concepts](./core_concepts.md)
+- [How To Continue](./how_to_continue.md)
 # Reference
 - [PaperbitCanvas](./ref/canvas/index.md)
 - [PaperbitAPI](./ref/api/index.md)

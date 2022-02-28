@@ -117,12 +117,12 @@ All the javascript code will be inside the `src` folder, so feel free to add new
 At the moment, we have to initialize the library, so replace the code you have in the entrypoint (`main.js`) with the following:
 
 ```javascript
-import { Paperbit } from "paperbit"
+import { PaperbitCanvas } from "paperbit"
 
-const paperbit = new Paperbit()
-const { ellipse, mouse } = paperbit.api
+const canvas = new PaperbitCanvas(document.body)
+const { ellipse, mouse } = canvas.api
 
-paperbit.api.onDraw = () => {
+canvas.api.onDraw = () => {
 	ellipse(...mouse.pos, .1)
 }
 ```
@@ -132,4 +132,5 @@ Now serve it (`npm run serve`) and the fun part begins.
 ## Next Steps
 
 Now we have a place to start coding and develop our ideas.
-To learn how Paperbit works go to the next section: [Core Concepts](./../core_concepts.md)
+To learn how Paperbit works go to the [Core Concepts](./../core_concepts.md)
+section, and to power up we recommend to take a took to the [How To Continue]() section.
