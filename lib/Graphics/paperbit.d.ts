@@ -1,9 +1,9 @@
 import { Graphics } from "./graphics";
-import { GraphicsAPI } from "./api/graphicsAPI";
+import { PaperbitAPI as PaperbitAPI } from "./api/graphicsAPI";
 import { ResultFrameData, StartFrameData } from "./interfaces";
-export declare class Paperbit {
-    protected paperbit: Paperbit;
-    api: GraphicsAPI;
+export declare class PaperbitCanvas {
+    protected paperbit: PaperbitCanvas;
+    api: PaperbitAPI;
     private doFrame;
     graphics: Graphics;
     private mouse;

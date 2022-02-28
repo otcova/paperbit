@@ -16,7 +16,7 @@ class GraphicsState {
 	matrix: number[]
 	color: Tuple<number, 4>
 
-	lineColor: Tuple<number, 4>
+	// lineColor: Tuple<number, 4>
 	lineWidth: number
 	lineCap: "round" | "square" | "butt"
 	lineJoin: "round" | "miter" | "bevel" | "none"
@@ -36,7 +36,7 @@ class GraphicsState {
 			this.matrix = [...copy.matrix]
 			this.color = [...copy.color]
 
-			this.lineColor = [...copy.lineColor]
+			// this.lineColor = [...copy.lineColor]
 			this.lineWidth = copy.lineWidth
 			this.lineCap = copy.lineCap
 			this.lineJoin = copy.lineJoin
@@ -53,7 +53,7 @@ class GraphicsState {
 			this.matrix = matrix.new([4, 4])
 			this.color = [0.3, 0.3, 0.3, 1]
 
-			this.lineColor = [0, 0, 0, 1]
+			// this.lineColor = [0, 0, 0, 1]
 			this.lineWidth = .1
 			this.lineCap = "round"
 			this.lineJoin = "round"
@@ -73,7 +73,8 @@ class GraphicsState {
 export class GraphicsStateStack {
 
 	private stateStack = [new GraphicsState()]
-
+	
+	// Color
 	set color(c: number[] | number) { setColor(this.current.color, c) }
 	get color(): [number, number, number, number] { return this.current.color }
 	
@@ -82,9 +83,11 @@ export class GraphicsStateStack {
 	
 	set colorAlpha(alpha: number) { this.current.color[3] = alpha }
 	get colorAlpha(): number { return this.current.color[3] }
-
-	set lineColor(c: number[] | number) { setColor(this.current.lineColor, c) }
-	get lineColor() { return this.current.lineColor }
+	
+	
+	// Line
+	// set lineColor(c: number[] | number) { setColor(this.current.lineColor, c) }
+	// get lineColor() { return this.current.lineColor }
 
 	set lineWidth(width: number) { this.current.lineWidth = width }
 	get lineWidth() { return this.current.lineWidth }
@@ -94,28 +97,33 @@ export class GraphicsStateStack {
 
 	set lineJoin(type: "round" | "miter" | "bevel" | "none") { this.current.lineJoin = type }
 	get lineJoin() { return this.current.lineJoin }
-
+	
+	// Text
 	set font(font: null | FontType) { this.current.font = font }
 	get font(): null | FontType { return this.current.font }
-
+	
+	set textOrigin(origin: Origin) { this.current.textOrigin = origin }
+	get textOrigin() { return this.current.textOrigin }
+	
+	// Texture
 	set texture(tex: null | TextureType) { this.current.texture = tex }
 	get texture(): null | TextureType { return this.current.texture }
 
 	set textureColorBlend(algorithm: "+" | "*" | "*r") { this.current.textureColorBlend = algorithm }
 	get textureColorBlend(): "+" | "*" | "*r" { return this.current.textureColorBlend }
-
+	
+	// Rect
 	set rectUV(uv: Tuple<number, 4 | 8>) { this.current.rectUV = uv }
 	get rectUV() { return this.current.rectUV }
 
 	set rectOrigin(origin: Origin) { this.current.rectOrigin = origin }
 	get rectOrigin() { return this.current.rectOrigin }
-
+	
+	// Matrix
 	set matrix(mat: number[]) { this.current.matrix = mat }
 	get matrix() { return this.current.matrix }
 	get inverseMatrix() { return matrix.invert4x4(this.current.matrix)}
 	
-	set textOrigin(origin: Origin) { this.current.textOrigin = origin }
-	get textOrigin() { return this.current.textOrigin }
 
 	rotateX(angle: number) {
 		const c = Math.cos(angle)

@@ -5,9 +5,9 @@ import { PaperbitAPI as PaperbitAPI } from "./api/graphicsAPI";
 import { ResultFrameData, StartFrameData } from "./interfaces";
 
 
-export class Paperbit {
+export class PaperbitCanvas {
 
-	protected paperbit: Paperbit = this;
+	protected paperbit: PaperbitCanvas = this;
 
 	api!: PaperbitAPI
 	private doFrame!: (frameData: StartFrameData) => Promise<ResultFrameData> | ResultFrameData

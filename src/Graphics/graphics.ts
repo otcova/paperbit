@@ -1,7 +1,6 @@
 import { FontAtlas, loadFNT } from "./../font"
 import { Canvas } from "./canvas"
 import { ResultFrameData } from "./interfaces"
-import { Paperbit } from "./paperbit"
 import { GLBuffer, GLProgram, GLTexture } from "./webGlUtils"
 
 export type canvasEventName = "resize" 

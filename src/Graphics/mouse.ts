@@ -1,6 +1,4 @@
-import { Canvas } from "./canvas"
 import { MouseData } from "./interfaces"
-import { Paperbit } from "./paperbit"
 
 export class PaperbitMouse implements MouseData {
 

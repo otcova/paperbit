@@ -9,7 +9,7 @@ Go to the [documentation](https://otcova.github.io/paperbit) to create a project
 Import paperbit to your project and you are ready to go.
 
 ```javascript
-const paperbit = new Paperbit(document.body)
+const paperbit = new PaperbitCanvas(document.body)
 const { ellipse, mouse } = paperbit.api
 
 paperbit.api.onDraw = () => {

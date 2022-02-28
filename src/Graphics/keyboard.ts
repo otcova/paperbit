@@ -1,5 +1,4 @@
 import { KeyboardData } from "./interfaces";
-import { Paperbit } from "./paperbit";
 
 export class PaperbitKeyboard implements KeyboardData {
 

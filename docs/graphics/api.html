@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Webpack - Paperbit Documentation</title>
+        <title>PaperbitAPI Reference - Paperbit Documentation</title>
 
 
         <!-- Custom HTML head -->
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../setup_a_project.html"><strong aria-hidden="true">1.</strong> Setup a Project</a></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">1.1.</strong> HTML</div></li><li class="chapter-item expanded "><a href="../setup/webpack.html" class="active"><strong aria-hidden="true">1.2.</strong> Webpack</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.3.</strong> React</div></li></ol></li><li class="chapter-item expanded "><a href="../core_concepts.html"><strong aria-hidden="true">2.</strong> Core Concepts</a></li><li class="chapter-item expanded "><a href="../graphics/constructor.html"><strong aria-hidden="true">3.</strong> Paperbit Constructor</a></li><li class="chapter-item expanded "><a href="../graphics/api.html"><strong aria-hidden="true">4.</strong> PaperbitAPI Reference</a></li><li class="chapter-item expanded affix "><li class="part-title">Utilities</li><li class="chapter-item expanded "><a href="../utils/vector.html"><strong aria-hidden="true">5.</strong> Vector</a></li><li class="chapter-item expanded "><a href="../utils/matrix.html"><strong aria-hidden="true">6.</strong> Matrix</a></li><li class="chapter-item expanded "><a href="../utils/geometry.html"><strong aria-hidden="true">7.</strong> Geometry</a></li><li class="chapter-item expanded "><a href="../utils/smooth_bit.html"><strong aria-hidden="true">8.</strong> SmoothBit</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../setup_a_project.html"><strong aria-hidden="true">1.</strong> Setup a Project</a></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">1.1.</strong> HTML</div></li><li class="chapter-item expanded "><a href="../setup/webpack.html"><strong aria-hidden="true">1.2.</strong> Webpack</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.3.</strong> React</div></li></ol></li><li class="chapter-item expanded "><a href="../core_concepts.html"><strong aria-hidden="true">2.</strong> Core Concepts</a></li><li class="chapter-item expanded "><a href="../graphics/constructor.html"><strong aria-hidden="true">3.</strong> Paperbit Constructor</a></li><li class="chapter-item expanded "><a href="../graphics/api.html" class="active"><strong aria-hidden="true">4.</strong> PaperbitAPI Reference</a></li><li class="chapter-item expanded affix "><li class="part-title">Utilities</li><li class="chapter-item expanded "><a href="../utils/vector.html"><strong aria-hidden="true">5.</strong> Vector</a></li><li class="chapter-item expanded "><a href="../utils/matrix.html"><strong aria-hidden="true">6.</strong> Matrix</a></li><li class="chapter-item expanded "><a href="../utils/geometry.html"><strong aria-hidden="true">7.</strong> Geometry</a></li><li class="chapter-item expanded "><a href="../utils/smooth_bit.html"><strong aria-hidden="true">8.</strong> SmoothBit</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -142,127 +142,116 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="webpack"><a class="header" href="#webpack">Webpack</a></h1>
-<p>This is a step guide for creating a new webpack project, 
-if you already know how to create one,
-feel free to go to the <a href="#use-paperbit">Use Paperbit</a> section.</p>
-<h2 id="system-requirements"><a class="header" href="#system-requirements">System Requirements</a></h2>
+                        <h1 id="paperbitapi"><a class="header" href="#paperbitapi">PaperbitAPI</a></h1>
+<p>The graphics API is composed of three components.</p>
 <ul>
-<li><a href="http://nodejs.org/" target="_blank">Node.js 12.22.0</a> or later</li>
+<li><a href="#graphic-functions">Graphic Functions</a></li>
+<li><a href="#state">State</a></li>
+<li><a href="#events">Events</a></li>
 </ul>
-<h2 id="setup"><a class="header" href="#setup">Setup</a></h2>
-<h4 id="install-the-dependencies"><a class="header" href="#install-the-dependencies">Install the Dependencies</a></h4>
-<p>Open the terminal on a new file, and create the npm project with the command:</p>
-<pre><code>npm init -y
-</code></pre>
-<p>Install Paperbit</p>
-<pre><code>npm install paperbit 
-</code></pre>
-<p>And finally install the development dependencies</p>
-<pre><code>npm install -D webpack webpack-cli webpack-dev-server babel-loader @babel/core
-</code></pre>
-<h4 id="create-the-first-project-files"><a class="header" href="#create-the-first-project-files">Create the first project files</a></h4>
-<p>Now that we have all the dependencies, we have to setup them so they work as we want.</p>
-<p>Fist we need a <code>webpack.config.js</code> file to tell webpack what to do:</p>
-<pre><code class="language-javascript">const path = require('path');
-
-module.exports = {
-	mode: 'development',
-	
-	devtool: 'inline-source-map',
-	entry: './src/main.js',
-	output: {
-		filename: 'index.js',
-		path: path.resolve(__dirname, 'public'),
-	},
-	module: {
-		rules: [
-			{
-				test: /\.ts$/,
-				exclude: /node_module/,
-				use: 'babel-loader'
-			}]
-	},
-	resolve: {
-		extensions: ['.js']
-	},
-	devServer: {
-		port: 80,
-		static: { directory: path.resolve('public') },
-		client: { logging: 'warn' },
-	},
-}
-</code></pre>
-<p>In that configuration we tolled to webpack:</p>
+<h2 id="graphic-functions"><a class="header" href="#graphic-functions">Graphic Functions</a></h2>
+<p>For drawing to the canvas we need to create geometry.
+This functions only request position and size,
+the color, texture, and other configurations are managed by the <a href="#state">State</a>.</p>
 <ul>
-<li>Our javascript source code is in the <code>src</code> folder, and the entrypoint is the file <code>main.js</code></li>
-<li>Bundle the source code in a single file <code>index.js</code></li>
-<li>And serve the folder <code>public</code> on <code>http://localhost</code> </li>
+<li><a href="">rect</a> — Draw a rectangle from position and size</li>
+<li><a href="">ellipse</a> — Draw an ellipse from position and size</li>
+<li><a href="">triangle</a> — Draw a triangle from three coordinates</li>
+<li><a href="">triangleStrip</a> — Draw a triangle strip from a list of coordinates</li>
+<li><a href="">line</a> — Draw a line from a list of coordinates</li>
 </ul>
-<p>Now we have to create the <code>src</code> folder with the <code>main.js</code> file:</p>
-<pre><code class="language-javascript">console.log(&quot;Hello world!&quot;)
-</code></pre>
-<p>We also need a <code>index.html</code> file on the <code>public</code> folder, which will tell the web client to load the bundled code:</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-	&lt;meta charset=&quot;UTF-8&quot;&gt;
-	&lt;title&gt;Paperbit&lt;/title&gt;
-	&lt;style&gt;
-		html, body {
-			width: 100%;
-			height: 100%;
-			margin: 0px;
-		}
-	&lt;/style&gt;
-	&lt;script src=&quot;./index.js&quot; defer&gt;&lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<h4 id="serve-the-web"><a class="header" href="#serve-the-web">Serve the web</a></h4>
-<p>Now we have all set up, to launch the website you can use this single command:</p>
-<pre><code>npx webpack serve
-</code></pre>
-<p>It will serve on the <a href="http://localhost">http://localhost</a> website 
-and it will update when you change the source code.</p>
-<p>It's recommended to add the command to the <code>package.json</code> file, inside the &quot;scripts&quot; add the following line</p>
-<pre><code class="language-json">// [...]
-// &quot;scripts&quot;: {
-		&quot;serve&quot;: &quot;webpack serve&quot;,
-// [...]
-</code></pre>
-<p>and now you can serve with the following</p>
-<pre><code>npm run serve
-</code></pre>
-<h2 id="use-paperbit"><a class="header" href="#use-paperbit">Use Paperbit</a></h2>
-<p>Finally we have our project setup, now we can use the Paperbit library.</p>
-<p>All the javascript code will be inside the <code>src</code> folder, so feel free to add new files when your main gets big.
-At the moment, we have to initialize the library, so replace the code you have in the entrypoint (<code>main.js</code>) with the following:</p>
-<pre><code class="language-javascript">import { Paperbit } from &quot;paperbit&quot;
-
-const paperbit = new Paperbit()
-const { ellipse, mouse } = paperbit.api
-
-paperbit.api.onDraw = () =&gt; {
-	ellipse(...mouse.pos, .1)
-}
-</code></pre>
-<p>Now serve it (<code>npm run serve</code>) and the fun part begins.</p>
-<h2 id="next-steps"><a class="header" href="#next-steps">Next Steps</a></h2>
-<p>Now we have a place to start coding and develop our ideas.
-To learn how Paperbit works go to the next section: <a href="./../core_concepts.html">Core Concepts</a></p>
+<h2 id="state"><a class="header" href="#state">State</a></h2>
+<p>We can customize the geometry and modify the graphics functions comportment by editing the state.
+The State can be classified with two different sections:</p>
+<ul>
+<li>The ones that directly <a href="#get-and-set">gets or sets</a> the state.</li>
+<li>The ones that <a href="#modifiers">modifies or transforms</a> the state.</li>
+</ul>
+<h3 id="get-and-set"><a class="header" href="#get-and-set">Get and Set</a></h3>
+<h4 id="color"><a class="header" href="#color">Color</a></h4>
+<ul>
+<li><a href="">color</a> — Get and set the color of the geometry [r, g, b, a] with floats between 0 to 1.</li>
+<li><a href="">colorHex</a> — Get and set the color with a single hexadecimal number (0xFF00FF).</li>
+<li><a href="">colorAlpha</a> — Get and set the alpha component of the color (the transparency).</li>
+</ul>
+<h4 id="texture"><a class="header" href="#texture">Texture</a></h4>
+<ul>
+<li><a href="">texture</a> — Get and set the texture used in the geometry.</li>
+<li><a href="">textureColorBlend</a> — Get and set the blend formula to blend the color with the texture.</li>
+</ul>
+<h4 id="rect"><a class="header" href="#rect">Rect</a></h4>
+<ul>
+<li><a href="">rectOrigin</a> — Get and set the origin of the rect.</li>
+<li><a href="">rectUV</a> — Get and set the texture coordinates.</li>
+</ul>
+<h4 id="text"><a class="header" href="#text">Text</a></h4>
+<ul>
+<li><a href="">textOrigin</a> — Get and set the origin of the text.</li>
+<li><a href="">font</a> — Get and set the font used to draw text.</li>
+</ul>
+<h4 id="line"><a class="header" href="#line">Line</a></h4>
+<ul>
+<li><a href="">lineWidth</a> — Get and set the line width.</li>
+<li><a href="">lineCap</a> — Get and set the type of the line end (round, square, ...).</li>
+<li><a href="">lineJoin</a> — Get and set the type of the joints which connect line segments (round, square, ...).</li>
+</ul>
+<h4 id="matrix"><a class="header" href="#matrix">Matrix</a></h4>
+<ul>
+<li><a href="">matrix</a> — Get and set the transformation matrix used in the geometry.</li>
+<li><a href="">inverseMatrix</a> — Get the inverse of the transformation matrix.</li>
+</ul>
+<h3 id="modifiers"><a class="header" href="#modifiers">Modifiers</a></h3>
+<ul>
+<li><a href="">scope</a> — Create a scope for the state.</li>
+<li><a href="">translate</a> — Move the geometry.</li>
+<li><a href="">rotate</a> — Rotate the geometry with any axis.</li>
+<li><a href="">rotateX</a> — Rotate the geometry with X axis.</li>
+<li><a href="">rotateY</a> — Rotate the geometry with Y axis.</li>
+<li><a href="">rotateZ</a> — Rotate the geometry with Z axis.</li>
+<li><a href="">scale</a> — Scale the geometry.</li>
+</ul>
+<h2 id="events"><a class="header" href="#events">Events</a></h2>
+<p>Finally, the api manages events so we can execute the code when it is required.
+There are </p>
+<ul>
+<li><a href="">onStart</a> — Fires after the first frame.</li>
+<li><a href="">onDraw</a> — Fires every frame.</li>
+</ul>
+<h3 id="mouse"><a class="header" href="#mouse">Mouse</a></h3>
+<p>The <code>api.mouse</code> manages their own events, but instead of using them
+we could check the <a href="">mouse</a> data every frame.</p>
+<ul>
+<li><a href="">onMove</a></li>
+<li><a href="">onWheel</a></li>
+<li><a href="">onDown</a></li>
+<li><a href="">onUp</a></li>
+</ul>
+<h3 id="keyboard"><a class="header" href="#keyboard">Keyboard</a></h3>
+<p>The <code>api.keyboard</code> functions the same way that the mouse.
+It manages their own events, but instead of using them
+we could check the <a href="">keyboard</a> data every frame.</p>
+<ul>
+<li><a href="">onDown</a> — Fires when a key is pressed, 'ó' would create two events ('´' and 'o').</li>
+<li><a href="">onUp</a> — Fires when a key is released, 'ó' would create two events ('´' and 'o').</li>
+<li><a href="">onType</a>  — Fires a letter when it is typed, 'ó' would create a single event.</li>
+</ul>
+<h3 id="frame"><a class="header" href="#frame">Frame</a></h3>
+<p>The <code>api.frame</code> functions the same way that the mouse and keyboard.
+It manages their own events, but instead of using them
+we could check the <a href="">frame</a> data every frame.</p>
+<ul>
+<li><a href="">onResize</a> — Fires when the canvas size has been resized.</li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../setup_a_project.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../graphics/constructor.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../core_concepts.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../utils/vector.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -272,11 +261,11 @@ To learn how Paperbit works go to the next section: <a href="./../core_concepts.
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../setup_a_project.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../graphics/constructor.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../core_concepts.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../utils/vector.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

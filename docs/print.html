@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="setup_a_project.html"><strong aria-hidden="true">1.</strong> Setup a Project</a></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">1.1.</strong> HTML</div></li><li class="chapter-item expanded "><a href="setup/webpack.html"><strong aria-hidden="true">1.2.</strong> Webpack</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.3.</strong> React</div></li></ol></li><li class="chapter-item expanded "><a href="core_concepts.html"><strong aria-hidden="true">2.</strong> Core Concepts</a></li><li class="chapter-item expanded affix "><li class="part-title">Graphics</li><li class="chapter-item expanded "><a href="graphics/initialize.html"><strong aria-hidden="true">3.</strong> Initialize Paperbit</a></li><li class="chapter-item expanded affix "><li class="part-title">Utilities</li><li class="chapter-item expanded "><a href="utils/vector.html"><strong aria-hidden="true">4.</strong> Vector</a></li><li class="chapter-item expanded "><a href="utils/matrix.html"><strong aria-hidden="true">5.</strong> Matrix</a></li><li class="chapter-item expanded "><a href="utils/geometry.html"><strong aria-hidden="true">6.</strong> Geometry</a></li><li class="chapter-item expanded "><a href="utils/smooth_bit.html"><strong aria-hidden="true">7.</strong> SmoothBit</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="setup_a_project.html"><strong aria-hidden="true">1.</strong> Setup a Project</a></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">1.1.</strong> HTML</div></li><li class="chapter-item expanded "><a href="setup/webpack.html"><strong aria-hidden="true">1.2.</strong> Webpack</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.3.</strong> React</div></li></ol></li><li class="chapter-item expanded "><a href="core_concepts.html"><strong aria-hidden="true">2.</strong> Core Concepts</a></li><li class="chapter-item expanded "><a href="graphics/constructor.html"><strong aria-hidden="true">3.</strong> Paperbit Constructor</a></li><li class="chapter-item expanded "><a href="graphics/api.html"><strong aria-hidden="true">4.</strong> PaperbitAPI Reference</a></li><li class="chapter-item expanded affix "><li class="part-title">Utilities</li><li class="chapter-item expanded "><a href="utils/vector.html"><strong aria-hidden="true">5.</strong> Vector</a></li><li class="chapter-item expanded "><a href="utils/matrix.html"><strong aria-hidden="true">6.</strong> Matrix</a></li><li class="chapter-item expanded "><a href="utils/geometry.html"><strong aria-hidden="true">7.</strong> Geometry</a></li><li class="chapter-item expanded "><a href="utils/smooth_bit.html"><strong aria-hidden="true">8.</strong> SmoothBit</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -147,10 +147,14 @@
 <p>Paperbit is a library to create graphics with WebGL.
 Our main goal is to let the programmer develop his own creativity.</p>
 <p>The library gives graphical functions to draw to the canvas,
-and some utilities to accelerate development.</p>
+and some utilities to accelerate development process.</p>
 <h2 id="get-started"><a class="header" href="#get-started">Get Started</a></h2>
-<p>To use Paperbit we need to <a href="./setup_a_project.html">setup a project</a>
-and understand the <a href="./core_concepts.html">core concepts</a>.</p>
+<p>To use Paperbit you will need to <a href="./setup_a_project.html">setup a project</a>
+and understand the <a href="./core_concepts.html">core concepts</a>.
+Then you can read the documentation freely while using the library.</p>
+<p>We also recommend to check out some <a href="">examples</a> to power up,
+to get inspiration
+and to understand the capabilities of the library.</p>
 <h2 id="contributing"><a class="header" href="#contributing">Contributing</a></h2>
 <p>Feel free to create a <a href="https://github.com/otcova/paperbit/pulls">pull request</a> to improve this documentation.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="setup-a-project"><a class="header" href="#setup-a-project">Setup a Project</a></h1>
@@ -271,7 +275,7 @@ paperbit.api.onDraw = () =&gt; {
 <p>Now serve it (<code>npm run serve</code>) and the fun part begins.</p>
 <h2 id="next-steps"><a class="header" href="#next-steps">Next Steps</a></h2>
 <p>Now we have a place to start coding and develop our ideas.
-To learn how Paperbit works go to the next section: <a href="setup/">Getting started</a></p>
+To learn how Paperbit works go to the next section: <a href="setup/./../core_concepts.html">Core Concepts</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="core-concepts"><a class="header" href="#core-concepts">Core Concepts</a></h1>
 <p>Paperbit has two distinct parts, the <a href="core_concepts.html#graphics-engine">graphics engine</a> and the <a href="core_concepts.html#utilities">utilities</a>.</p>
 <h2 id="graphics-engine"><a class="header" href="#graphics-engine">Graphics Engine</a></h2>
@@ -280,15 +284,16 @@ To learn how Paperbit works go to the next section: <a href="setup/">Getting sta
 <li><strong>PaperbitCanvas</strong></li>
 </ol>
 <p>Is the responsible of creating the canvas and the WebGL context.
-His job is to request frames to the PaperbitAPI, 
-when a frame call is complete it sends to the gpu all the data in a single draw call.</p>
+His job is to request frames to the PaperbitAPI.
+When a frame request is complete, it sends to the gpu all the geometry in a single draw call.</p>
 <ol start="2">
 <li><strong>PaperbitAPI</strong></li>
 </ol>
-<p>Is the responsible of creating the frame data and managing events. 
-When the PaperbitCanvas request a frame it will fire the needed events (OnStart, onDraw, onMouseMove ...).
-Once the onDraw returns, it will send to the PaperbitCanvas all the geometry.</p>
-<p>This isolation on the canvas and the api let us to create the canvas on the main thread
+<p>When using Paperbit the 99.9% of the time we are going to interact with the PaperbitAPI.
+Is the responsible of creating the frame data. 
+When the PaperbitCanvas request a frame, PaperbitAPI will fire the needed events (OnStart, onDraw, onMouseMove, ...).
+Once all event returns, it will return to the PaperbitCanvas all the geometry.</p>
+<p>Having this two classes (canvas and api) let us to create the canvas on the main thread
 and use the api on a <a href="./graphics/initialize.html#web-worker">web worker</a>. </p>
 <h2 id="utilities"><a class="header" href="#utilities">Utilities</a></h2>
 <p>When using a graphics library, it is always nice to have some common features in our disposal:</p>
@@ -300,13 +305,15 @@ and use the api on a <a href="./graphics/initialize.html#web-worker">web worker<
 </ul>
 <p>They are not related in any way to the graphics engine.
 The purpose of the utilities is to avoid reinventing the wheel in each project.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="initialize-paperbit"><a class="header" href="#initialize-paperbit">Initialize Paperbit</a></h1>
-<p>A Paperbit context consist in the Paperbit canvas, and the Paperbit API.
-They can be created in various environments.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="paperbit-constructor"><a class="header" href="#paperbit-constructor">Paperbit Constructor</a></h1>
+<p>A Paperbit context consist of the PaperbitCanvas, and the PaperbitAPI.
+When calling <code>new PaperbitCanvas(...)</code> it will also create a PaperbitAPI, 
+but we are not forced to used it (as demonstrated on the <a href="graphics/constructor.html#web-worker">Web worker</a> section).</p>
 <h2 id="recommended"><a class="header" href="#recommended">Recommended</a></h2>
-<p>Paperbit constructor is creating the canvas on the HTML element that is provided (<code>document.body</code>)
-and is also creating an api instance already linked with the canvas.</p>
-<pre><code class="language-javascript">const bit = new Paperbit(document.body)
+<p>For most user cases, this is the better (and simplest) approach.
+PaperbitCanvas is creating the canvas at the provided container (<code>document.body</code>),
+and it is also creating a PaperbitAPI instance already linked with the canvas.</p>
+<pre><code class="language-javascript">const bit = new PaperbitCanvas(document.body)
 const { ellipse, mouse } = bit.api
 
 bit.api.onDraw = () =&gt; {
@@ -337,7 +344,7 @@ const onFrameRequest =  frameData =&gt; {
 	return new Promise(r =&gt; resolveFrame = r)
 }
 
-const paperbit = new Paperbit(document.body, onFrameRequest)
+const paperbit = new PaperbitCanvas(document.body, onFrameRequest)
 </code></pre>
 <p>On the worker side, we can create a PaperbitAPI, it will return the api and a doFrame function.
 When we receive the frame request we can use the doFrame function, 
@@ -359,8 +366,108 @@ api.onDraw = () =&gt; {
 	ellipse(...mouse.pos, .1)
 }
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="paperbitapi"><a class="header" href="#paperbitapi">PaperbitAPI</a></h1>
+<p>The graphics API is composed of three components.</p>
+<ul>
+<li><a href="graphics/api.html#graphic-functions">Graphic Functions</a></li>
+<li><a href="graphics/api.html#state">State</a></li>
+<li><a href="graphics/api.html#events">Events</a></li>
+</ul>
+<h2 id="graphic-functions"><a class="header" href="#graphic-functions">Graphic Functions</a></h2>
+<p>For drawing to the canvas we need to create geometry.
+This functions only request position and size,
+the color, texture, and other configurations are managed by the <a href="graphics/api.html#state">State</a>.</p>
+<ul>
+<li><a href="graphics/">rect</a> — Draw a rectangle from position and size</li>
+<li><a href="graphics/">ellipse</a> — Draw an ellipse from position and size</li>
+<li><a href="graphics/">triangle</a> — Draw a triangle from three coordinates</li>
+<li><a href="graphics/">triangleStrip</a> — Draw a triangle strip from a list of coordinates</li>
+<li><a href="graphics/">line</a> — Draw a line from a list of coordinates</li>
+</ul>
+<h2 id="state"><a class="header" href="#state">State</a></h2>
+<p>We can customize the geometry and modify the graphics functions comportment by editing the state.
+The State can be classified with two different sections:</p>
+<ul>
+<li>The ones that directly <a href="graphics/api.html#get-and-set">gets or sets</a> the state.</li>
+<li>The ones that <a href="graphics/api.html#modifiers">modifies or transforms</a> the state.</li>
+</ul>
+<h3 id="get-and-set"><a class="header" href="#get-and-set">Get and Set</a></h3>
+<h4 id="color"><a class="header" href="#color">Color</a></h4>
+<ul>
+<li><a href="graphics/">color</a> — Get and set the color of the geometry [r, g, b, a] with floats between 0 to 1.</li>
+<li><a href="graphics/">colorHex</a> — Get and set the color with a single hexadecimal number (0xFF00FF).</li>
+<li><a href="graphics/">colorAlpha</a> — Get and set the alpha component of the color (the transparency).</li>
+</ul>
+<h4 id="texture"><a class="header" href="#texture">Texture</a></h4>
+<ul>
+<li><a href="graphics/">texture</a> — Get and set the texture used in the geometry.</li>
+<li><a href="graphics/">textureColorBlend</a> — Get and set the blend formula to blend the color with the texture.</li>
+</ul>
+<h4 id="rect"><a class="header" href="#rect">Rect</a></h4>
+<ul>
+<li><a href="graphics/">rectOrigin</a> — Get and set the origin of the rect.</li>
+<li><a href="graphics/">rectUV</a> — Get and set the texture coordinates.</li>
+</ul>
+<h4 id="text"><a class="header" href="#text">Text</a></h4>
+<ul>
+<li><a href="graphics/">textOrigin</a> — Get and set the origin of the text.</li>
+<li><a href="graphics/">font</a> — Get and set the font used to draw text.</li>
+</ul>
+<h4 id="line"><a class="header" href="#line">Line</a></h4>
+<ul>
+<li><a href="graphics/">lineWidth</a> — Get and set the line width.</li>
+<li><a href="graphics/">lineCap</a> — Get and set the type of the line end (round, square, ...).</li>
+<li><a href="graphics/">lineJoin</a> — Get and set the type of the joints which connect line segments (round, square, ...).</li>
+</ul>
+<h4 id="matrix"><a class="header" href="#matrix">Matrix</a></h4>
+<ul>
+<li><a href="graphics/">matrix</a> — Get and set the transformation matrix used in the geometry.</li>
+<li><a href="graphics/">inverseMatrix</a> — Get the inverse of the transformation matrix.</li>
+</ul>
+<h3 id="modifiers"><a class="header" href="#modifiers">Modifiers</a></h3>
+<ul>
+<li><a href="graphics/">scope</a> — Create a scope for the state.</li>
+<li><a href="graphics/">translate</a> — Move the geometry.</li>
+<li><a href="graphics/">rotate</a> — Rotate the geometry with any axis.</li>
+<li><a href="graphics/">rotateX</a> — Rotate the geometry with X axis.</li>
+<li><a href="graphics/">rotateY</a> — Rotate the geometry with Y axis.</li>
+<li><a href="graphics/">rotateZ</a> — Rotate the geometry with Z axis.</li>
+<li><a href="graphics/">scale</a> — Scale the geometry.</li>
+</ul>
+<h2 id="events"><a class="header" href="#events">Events</a></h2>
+<p>Finally, the api manages events so we can execute the code when it is required.
+There are </p>
+<ul>
+<li><a href="graphics/">onStart</a> — Fires after the first frame.</li>
+<li><a href="graphics/">onDraw</a> — Fires every frame.</li>
+</ul>
+<h3 id="mouse"><a class="header" href="#mouse">Mouse</a></h3>
+<p>The <code>api.mouse</code> manages their own events, but instead of using them
+we could check the <a href="graphics/">mouse</a> data every frame.</p>
+<ul>
+<li><a href="graphics/">onMove</a></li>
+<li><a href="graphics/">onWheel</a></li>
+<li><a href="graphics/">onDown</a></li>
+<li><a href="graphics/">onUp</a></li>
+</ul>
+<h3 id="keyboard"><a class="header" href="#keyboard">Keyboard</a></h3>
+<p>The <code>api.keyboard</code> functions the same way that the mouse.
+It manages their own events, but instead of using them
+we could check the <a href="graphics/">keyboard</a> data every frame.</p>
+<ul>
+<li><a href="graphics/">onDown</a> — Fires when a key is pressed, 'ó' would create two events ('´' and 'o').</li>
+<li><a href="graphics/">onUp</a> — Fires when a key is released, 'ó' would create two events ('´' and 'o').</li>
+<li><a href="graphics/">onType</a>  — Fires a letter when it is typed, 'ó' would create a single event.</li>
+</ul>
+<h3 id="frame"><a class="header" href="#frame">Frame</a></h3>
+<p>The <code>api.frame</code> functions the same way that the mouse and keyboard.
+It manages their own events, but instead of using them
+we could check the <a href="graphics/">frame</a> data every frame.</p>
+<ul>
+<li><a href="graphics/">onResize</a> — Fires when the canvas size has been resized.</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="vector"><a class="header" href="#vector">Vector</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="matrix"><a class="header" href="#matrix">Matrix</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="matrix-1"><a class="header" href="#matrix-1">Matrix</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="geometry"><a class="header" href="#geometry">Geometry</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="smoothbit"><a class="header" href="#smoothbit">SmoothBit</a></h1>
 

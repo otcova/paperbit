@@ -5,9 +5,8 @@
 	- [Webpack](./setup/webpack.md)
 	- [React]()
 - [Core Concepts](./core_concepts.md)
-
-# Graphics
-- [Initialize Paperbit](./graphics/initialize.md)
+- [Paperbit Constructor](./graphics/constructor.md)
+- [PaperbitAPI Reference](./graphics/api.md)
 # Utilities
 - [Vector](./utils/vector.md)
 - [Matrix](./utils/matrix.md)

@@ -1,21 +1,25 @@
-# Initialize Paperbit
+# Paperbit Constructor
 
-A Paperbit context consist in the Paperbit canvas, and the Paperbit API.
-They can be created in various environments.
+A Paperbit context consist of the PaperbitCanvas, and the PaperbitAPI.
+When calling `new PaperbitCanvas(...)` it will also create a PaperbitAPI, 
+but we are not forced to used it (as demonstrated on the [Web worker](#web-worker) section).
 
 ## Recommended
 
-Paperbit constructor is creating the canvas on the HTML element that is provided (`document.body`)
-and is also creating an api instance already linked with the canvas.
+For most user cases, this is the better (and simplest) approach.
+PaperbitCanvas is creating the canvas at the provided container (`document.body`),
+and it is also creating a PaperbitAPI instance already linked with the canvas.
 
 ```javascript
-const bit = new Paperbit(document.body)
+const bit = new PaperbitCanvas(document.body)
 const { ellipse, mouse } = bit.api
 
 bit.api.onDraw = () => {
 	ellipse(...mouse.pos, .1)
 }
 ```
+
+
 
 ## Web worker
 
@@ -42,7 +46,7 @@ const onFrameRequest =  frameData => {
 	return new Promise(r => resolveFrame = r)
 }
 
-const paperbit = new Paperbit(document.body, onFrameRequest)
+const paperbit = new PaperbitCanvas(document.body, onFrameRequest)
 ```
 
 On the worker side, we can create a PaperbitAPI, it will return the api and a doFrame function.

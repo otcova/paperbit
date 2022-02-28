@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="setup_a_project.html"><strong aria-hidden="true">1.</strong> Setup a Project</a></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">1.1.</strong> HTML</div></li><li class="chapter-item expanded "><a href="setup/webpack.html"><strong aria-hidden="true">1.2.</strong> Webpack</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.3.</strong> React</div></li></ol></li><li class="chapter-item expanded "><a href="core_concepts.html" class="active"><strong aria-hidden="true">2.</strong> Core Concepts</a></li><li class="chapter-item expanded affix "><li class="part-title">Graphics</li><li class="chapter-item expanded "><a href="graphics/initialize.html"><strong aria-hidden="true">3.</strong> Initialize Paperbit</a></li><li class="chapter-item expanded affix "><li class="part-title">Utilities</li><li class="chapter-item expanded "><a href="utils/vector.html"><strong aria-hidden="true">4.</strong> Vector</a></li><li class="chapter-item expanded "><a href="utils/matrix.html"><strong aria-hidden="true">5.</strong> Matrix</a></li><li class="chapter-item expanded "><a href="utils/geometry.html"><strong aria-hidden="true">6.</strong> Geometry</a></li><li class="chapter-item expanded "><a href="utils/smooth_bit.html"><strong aria-hidden="true">7.</strong> SmoothBit</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="setup_a_project.html"><strong aria-hidden="true">1.</strong> Setup a Project</a></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">1.1.</strong> HTML</div></li><li class="chapter-item expanded "><a href="setup/webpack.html"><strong aria-hidden="true">1.2.</strong> Webpack</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.3.</strong> React</div></li></ol></li><li class="chapter-item expanded "><a href="core_concepts.html" class="active"><strong aria-hidden="true">2.</strong> Core Concepts</a></li><li class="chapter-item expanded "><a href="graphics/constructor.html"><strong aria-hidden="true">3.</strong> Paperbit Constructor</a></li><li class="chapter-item expanded "><a href="graphics/api.html"><strong aria-hidden="true">4.</strong> PaperbitAPI Reference</a></li><li class="chapter-item expanded affix "><li class="part-title">Utilities</li><li class="chapter-item expanded "><a href="utils/vector.html"><strong aria-hidden="true">5.</strong> Vector</a></li><li class="chapter-item expanded "><a href="utils/matrix.html"><strong aria-hidden="true">6.</strong> Matrix</a></li><li class="chapter-item expanded "><a href="utils/geometry.html"><strong aria-hidden="true">7.</strong> Geometry</a></li><li class="chapter-item expanded "><a href="utils/smooth_bit.html"><strong aria-hidden="true">8.</strong> SmoothBit</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -150,15 +150,16 @@
 <li><strong>PaperbitCanvas</strong></li>
 </ol>
 <p>Is the responsible of creating the canvas and the WebGL context.
-His job is to request frames to the PaperbitAPI, 
-when a frame call is complete it sends to the gpu all the data in a single draw call.</p>
+His job is to request frames to the PaperbitAPI.
+When a frame request is complete, it sends to the gpu all the geometry in a single draw call.</p>
 <ol start="2">
 <li><strong>PaperbitAPI</strong></li>
 </ol>
-<p>Is the responsible of creating the frame data and managing events. 
-When the PaperbitCanvas request a frame it will fire the needed events (OnStart, onDraw, onMouseMove ...).
-Once the onDraw returns, it will send to the PaperbitCanvas all the geometry.</p>
-<p>This isolation on the canvas and the api let us to create the canvas on the main thread
+<p>When using Paperbit the 99.9% of the time we are going to interact with the PaperbitAPI.
+Is the responsible of creating the frame data. 
+When the PaperbitCanvas request a frame, PaperbitAPI will fire the needed events (OnStart, onDraw, onMouseMove, ...).
+Once all event returns, it will return to the PaperbitCanvas all the geometry.</p>
+<p>Having this two classes (canvas and api) let us to create the canvas on the main thread
 and use the api on a <a href="./graphics/initialize.html#web-worker">web worker</a>. </p>
 <h2 id="utilities"><a class="header" href="#utilities">Utilities</a></h2>
 <p>When using a graphics library, it is always nice to have some common features in our disposal:</p>
@@ -179,7 +180,7 @@ The purpose of the utilities is to avoid reinventing the wheel in each project.<
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="graphics/initialize.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="graphics/constructor.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -193,7 +194,7 @@ The purpose of the utilities is to avoid reinventing the wheel in each project.<
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="graphics/initialize.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="graphics/constructor.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

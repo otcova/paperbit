@@ -9,16 +9,17 @@ When we create an instance of `Paperbit`, two classes are initialized.
 1. **PaperbitCanvas**
 
 Is the responsible of creating the canvas and the WebGL context.
-His job is to request frames to the PaperbitAPI, 
-when a frame call is complete it sends to the gpu all the data in a single draw call.
+His job is to request frames to the PaperbitAPI.
+When a frame request is complete, it sends to the gpu all the geometry in a single draw call.
 
 2. **PaperbitAPI**
 
-Is the responsible of creating the frame data and managing events. 
-When the PaperbitCanvas request a frame it will fire the needed events (OnStart, onDraw, onMouseMove ...).
-Once the onDraw returns, it will send to the PaperbitCanvas all the geometry.
+When using Paperbit the 99.9% of the time we are going to interact with the PaperbitAPI.
+Is the responsible of creating the frame data. 
+When the PaperbitCanvas request a frame, PaperbitAPI will fire the needed events (OnStart, onDraw, onMouseMove, ...).
+Once all event returns, it will return to the PaperbitCanvas all the geometry.
 
-This isolation on the canvas and the api let us to create the canvas on the main thread
+Having this two classes (canvas and api) let us to create the canvas on the main thread
 and use the api on a [web worker](./graphics/initialize.md#web-worker). 
 
 ## Utilities

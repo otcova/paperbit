@@ -132,4 +132,4 @@ Now serve it (`npm run serve`) and the fun part begins.
 ## Next Steps
 
 Now we have a place to start coding and develop our ideas.
-To learn how Paperbit works go to the next section: [Getting started]()
+To learn how Paperbit works go to the next section: [Core Concepts](./../core_concepts.md)
