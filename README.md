@@ -1,20 +1,24 @@
 # Paperbit
 
-A WebGL typescript and javascript WebGL graphics library.
+A WebGL typescript and javascript graphics library.
 
-Go to the [documentation](https://otcova.github.io/paperbit) to create a project from the start.
-	
+## Documentation
+
+Go to our [documentation](https://otcova.github.io/paperbit) 
+and setup a new project with the [html step guide](https://otcova.github.io/paperbit/setup/html.html).
+
 ## Quick Start
 
-Import paperbit to your project and you are ready to go.
+1. Take a look at the [core concepts](https://otcova.github.io/paperbit/core_concepts.html).
+1. Import paperbit to your project
+1. And use this template to start programming.
 
 ```javascript
-const paperbit = new PaperbitCanvas(document.body)
-const { ellipse, mouse } = paperbit.api
+const canvas = new PaperbitCanvas(document.body)
+const { ellipse, mouse } = canvas.api
 
-paperbit.api.onDraw = () => {
+canvas.api.onDraw = () => {
     ellipse(...mouse.pos, .1)
 }
 ```
 
-You can read about the [core concepts](https://otcova.github.io/paperbit/core_concepts.html).

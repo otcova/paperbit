@@ -391,12 +391,12 @@ His job is to request frames to the PaperbitAPI.
 When a frame request is complete,
 it sends to the gpu all the geometry in a single draw call.</p>
 <h4 id="paperbitapi"><a class="header" href="#paperbitapi">PaperbitAPI</a></h4>
-<p>When creating the PaperbitCanvas it will create automatically the api.
+<p>When calling <code>new PaperbitCanvas(...)</code>, Paperbit is going to create automatically the a <code>PaperbitAPI</code> linked with the canvas.
 When using Paperbit the 99% of the time we are going to interact with the PaperbitAPI
 because it is the responsible of creating the frame data. 
-When the PaperbitCanvas request a frame PaperbitAPI will fire the needed events (onStart, onDraw, onMouseMove, …),
-and when they return, it will send back to the PaperbitCanvas all the geometry.</p>
-<p>Having this two classes (canvas and api) let us to create the canvas on the main thread
+When the PaperbitCanvas request a frame, PaperbitAPI will fire the needed events (onStart, onDraw, onMouseMove, …)
+and when all return, it will send back to the PaperbitCanvas all the geometry.</p>
+<p>Having this distinction of two classes (canvas and api) let us to create the canvas on the main thread
 and use the api on a <a href="./graphics/initialize.html#web-worker">web worker</a>. </p>
 <h2 id="utilities"><a class="header" href="#utilities">Utilities</a></h2>
 <p>When using a graphics library, it is always nice to have some common features in our disposal:</p>
@@ -407,7 +407,7 @@ and use the api on a <a href="./graphics/initialize.html#web-worker">web worker<
 <li><a href="utils/smooth_bit.html">Smooth</a> the transition of a number</li>
 </ul>
 <p>The main purpose of the utilities is to avoid reinventing the wheel in each project.
-It is not necessary to use them, but in some circumstances they might be very helpful.</p>
+It is not necessary to use them, but in some circumstances they are be very helpful.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="how-to-continue"><a class="header" href="#how-to-continue">How To Continue</a></h1>
 <p>After creating a project and reading the core concepts,
 you should have enough background to start developing making use of the reference section.</p>
