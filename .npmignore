@@ -1,7 +1,9 @@
 book
+bundle
 docs
 src
 tests
 .gitignore
 .npmignore
 tsconfig.json
+webpack.config.json
