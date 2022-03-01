@@ -36,7 +36,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "../../../";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "rust" : "rust";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -145,13 +145,13 @@
                         <h1 id="graphic-functions"><a class="header" href="#graphic-functions">Graphic Functions</a></h1>
 <p>For drawing to the canvas we need to create geometry.
 This functions only request position and size,
-the color, texture, and other configurations are managed by the <a href="#state">State</a>.</p>
+the color, texture, and other configurations are managed by the <a href="../state/index.html">State</a>.</p>
 <ul>
-<li><a href="./rect.html">rect</a> — Draw a rectangle from position and size</li>
-<li><a href="./ellipse.html">ellipse</a> — Draw an ellipse from position and size</li>
-<li><a href="./triangle.html">triangle</a> — Draw a triangle from three coordinates</li>
-<li><a href="./triangle-strip.html">triangleStrip</a> — Draw a triangle strip from a list of coordinates</li>
-<li><a href="./line.html">line</a> — Draw a line from a list of coordinates</li>
+<li><a href="./rect.html">rect</a> — Draw a rectangle on the canvas from a (x, y) coordinate and a (width, height) size.</li>
+<li><a href="./ellipse.html">ellipse</a> — Draw a ellipse on the canvas from a (x, y) coordinate and a (width, height) size.</li>
+<li><a href="./triangle.html">triangle</a> — Draw a triangle on the canvas from three coordinates.</li>
+<li><a href="./triangle-strip.html">triangleStrip</a> — Draw a triangle strip on the canvas from a list of coordinates.</li>
+<li><a href="./line.html">line</a> — Draw a line on the canvas from a list of coordinates.</li>
 </ul>
 
                     </main>

@@ -10,4 +10,5 @@ build-dir = "../docs"
 
 [output.html]
 default-theme = "rust"
+preferred-dark-theme = "rust"
 curly-quotes = true

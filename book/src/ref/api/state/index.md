@@ -2,8 +2,8 @@
 
 We can customize the geometry and modify the graphics functions comportment by editing the state.
 The State can be classified with two different sections:
-- The ones that directly [gets or sets](#get-and-set) the state.
-- The ones that [modifies or transforms](#modifiers) the state.
+- The ones that directly [gets or sets](#get-and-set) a value of the state.
+- The ones that [modify ot transform](#modifiers) the state.
 
 ## Get and Set
 #### Color

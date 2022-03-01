@@ -1,15 +1,9 @@
 const path = require('path');
 
-module.exports = {
+const config = {
 	mode: 'production',
-	// devtool: 'source-map',
 	entry: './lib/index.js',
-	output: {
-		filename: 'paperbit.js',
-		path: path.resolve(__dirname, 'bundle'),
-		library: 'paperbit',
-		libraryTarget: 'umd'
-	},
+	experiments: { outputModule: true },
 	module: {
 		rules: [
 			{
@@ -22,3 +16,19 @@ module.exports = {
 		extensions: ['.js']
 	}
 }
+
+module.exports = [{
+	...config,
+	output: {
+		filename: 'paperbit.js',
+		path: path.resolve(__dirname, 'bundle'),
+		library: { type: 'module' },
+	},
+}, {
+	...config,
+	output: {
+		filename: 'paperbit.js',
+		path: path.resolve(__dirname, 'book/src/code'),
+		library: { type: 'module' },
+	},
+}]

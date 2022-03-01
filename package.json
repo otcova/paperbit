@@ -9,6 +9,7 @@
     "dev": "tsc --watch",
     "build": "tsc",
     "bundle": "webpack",
+    "dev-bundle": "webpack watch",
     "prepublish": "npm run build & npm run bundle & npm run doc"
   },
   "keywords": [

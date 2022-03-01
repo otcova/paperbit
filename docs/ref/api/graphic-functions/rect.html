@@ -36,7 +36,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "../../../";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "rust" : "rust";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -142,18 +142,37 @@
 
                 <div id="content" class="content">
                     <main>
-                        <script src="../../../code/paperbit-util.js" type="module" defer></script>
+                        <script src="../../../code/paperbit-snippets.js" type="module" defer></script>
 <h1 id="rectangle"><a class="header" href="#rectangle">Rectangle</a></h1>
-<pre><code class="language-javascript">const { rect, mouse } = canvas.api
+<div id="paperbit-snippets">
+<pre><code class="language-javascript">const { rect, mouse, state, frame } = canvas.api
 </code></pre>
-<div class="paperbit">
-<pre><code class="language-javascript">rect(0, 0, .6)
+<pre><code class="language-javascript">rect(0, 0, .85)
+</code></pre>
+<pre><code class="language-javascript">rect(...mouse.pos, 1, .3)
+</code></pre>
+<pre><code class="language-javascript">state.rectOrigin = [-1, -1]
+rect(0, 0, ...mouse.pos)
 </code></pre>
 </div>
-<div class="paperbit">
-<pre><code class="language-javascript">rect(...mouse.pos, 1, .6)
+<h2 id="function"><a class="header" href="#function">Function</a></h2>
+<pre><code class="language-javascript">rect(x, y, width, height?)
 </code></pre>
-</div>
+<table><thead><tr><th style="text-align: center">Parameter</th><th style="text-align: center">Type</th><th style="text-align: left">Default Value</th></tr></thead><tbody>
+<tr><td style="text-align: center"><code>x</code></td><td style="text-align: center">number</td><td style="text-align: left">-</td></tr>
+<tr><td style="text-align: center"><code>y</code></td><td style="text-align: center">number</td><td style="text-align: left">-</td></tr>
+<tr><td style="text-align: center"><code>width</code></td><td style="text-align: center">number</td><td style="text-align: left">-</td></tr>
+<tr><td style="text-align: center"><code>height</code></td><td style="text-align: center">number</td><td style="text-align: left">width</td></tr>
+</tbody></table>
+<h2 id="state-configuration"><a class="header" href="#state-configuration">State Configuration</a></h2>
+<p>The comportment of the function can be modified by editing
+this state properties:</p>
+<ul>
+<li><a href=""><code>state.rectOrigin</code></a> — set the origin of the rectangle.</li>
+<li><a href=""><code>state.rectUV</code></a> — set the texture coordinates.</li>
+<li><a href=""><code>state.texture</code></a> — set the texture.</li>
+<li><a href=""><code>state.textureColorBlend</code></a> — set the equation used to mic the color with the texture.</li>
+</ul>
 
                     </main>
 

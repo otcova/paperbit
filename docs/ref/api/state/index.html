@@ -36,7 +36,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "../../../";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "rust" : "rust";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -146,8 +146,8 @@
 <p>We can customize the geometry and modify the graphics functions comportment by editing the state.
 The State can be classified with two different sections:</p>
 <ul>
-<li>The ones that directly <a href="#get-and-set">gets or sets</a> the state.</li>
-<li>The ones that <a href="#modifiers">modifies or transforms</a> the state.</li>
+<li>The ones that directly <a href="#get-and-set">gets or sets</a> a value of the state.</li>
+<li>The ones that <a href="#modifiers">modify ot transform</a> the state.</li>
 </ul>
 <h2 id="get-and-set"><a class="header" href="#get-and-set">Get and Set</a></h2>
 <h4 id="color"><a class="header" href="#color">Color</a></h4>

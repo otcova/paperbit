@@ -24,9 +24,10 @@ export class PaperbitMouse implements MouseData {
 
 	protected updateMouse(e: {clientX: number, clientY: number, buttons: number}) {
 		const minDim = Math.min(this.canvas.width, this.canvas.height)
+		const rect = this.canvas.getBoundingClientRect()
 		this.pos = [
-			(2 * (e.clientX - this.canvas.offsetLeft + window.scrollX) - this.canvas.width) / minDim, 
-			(this.canvas.height - 2 * (e.clientY - this.canvas.offsetTop + window.scrollY)) / minDim
+			(2 * (e.clientX - rect.left) - this.canvas.width) / minDim, 
+			(this.canvas.height - 2 * (e.clientY - rect.top)) / minDim
 		]
 		
 		if (((e.buttons & 1) == 0) != (this.left % 2 == 0)) ++this.left

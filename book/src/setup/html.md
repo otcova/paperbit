@@ -1,17 +1,22 @@
 # HTML
 
 Setting up Paperbit on a HTML file is very straightforward,
-you only have to follow these five small steps:
+you only have to follow these four simple steps:
 
-**1.** First create a folder for the project. 
+## 1. Create a project folder
 It can have the name you want,
 the purpose of the folder is to have a place to put all the files
 without losing them.
 
-**2.** Then create an `index.html` file with the following three elements:
-- `<style>` --- to make the body of the size of the screen.
-- `<script>` --- to include the paperbit library code.
+## 2. Create the HTML file
+The HTML is going to tell to the browser what to do.
+We are going to need the following two tags:
+- `<style>` --- to make the body of the page the size of the screen.
 - `<script>` --- to include your code.
+
+The file can have the name you want,
+the only requisite is that it should end with `.html`.
+After creating the file, fill it with the following code:
 
 ```html
 <!DOCTYPE html>
@@ -20,16 +25,44 @@ without losing them.
 		<meta charset="UTF-8">
 		<title>Paperbit</title>
 		<style> html, body { width: 100%; height: 100%; margin: 0; } </style>
-		<script src="./paperbit.js" defer></script>
-		<script src="./main.js" defer></script>
+		<script src="./main.js" type="module" defer></script>
 	</head>
 	<body></body>
 </html>
 ```
 
-**3.** As we have written in the HTML file that exist a script named `paperbit.js`,
-we need to add that
-<a href="#" onclick="
+This is a blank template with the two tags we talk about.
+If you don't know HTML don't worry,
+you are not going to need to modify it.
+
+## 3. Create the source file
+In HTML code, we told the browser to load a script named `main.js`,
+so we need to create the file.
+Paste the next code to the new `main.js` file.
+
+```js
+import { PaperbitCanvas } from "./paperbit.js"
+
+const canvas = new PaperbitCanvas(document.body)
+const { ellipse, mouse } = canvas.api
+
+canvas.api.onDraw = () => {
+    ellipse(...mouse.pos, .1)
+}
+```
+
+This is a blank Paperbit template.
+In this script we can observe three different parts:
+
+- **Import the library**
+
+```js
+import { PaperbitCanvas } from "./paperbit.js"
+```
+The first line imports the PaperbitCanvas from the paperbit library,
+so we will have to
+<a href="#" onauxclick="event.preventDefault(); this.click()" onclick="
+	console.log(event)
 	if (!this.download) {
 		event.preventDefault();
 		fetch('https:\/\/raw.githubusercontent.com/otcova/paperbit/main/bundle/paperbit.js')
@@ -40,26 +73,45 @@ we need to add that
 			this.click();
 		});
 	}
-">file</a>
-to the folder.	 
+">download</a>
+the library (witch will be a single file), and move it to the projects folder.
 
-**4.** Also, as we have written in the HTML file that our script is named `main.js`,
-we will need to create the file.
-In this case you can fill the file with the following Paperbit blank template:
+- **Create the canvas**
 
-```javascript
-const { PaperbitCanvas } = paperbit
-
+```js
 const canvas = new PaperbitCanvas(document.body)
 const { ellipse, mouse } = canvas.api
+```
 
+The next two lines are creating a PaperbitCanvas instance in the body of our page.
+Then we are extracting the `ellipse` and `mouse` properties from the canvas api.
+We could call `canvas.api.ellipse` every time we need to draw an ellipse to the canvas,
+but it's cleaner to store the function in a constant.
+
+- **Draw to the canvas**
+
+```js
 canvas.api.onDraw = () => {
     ellipse(...mouse.pos, .1)
 }
 ```
 
-**5.** As the last step you can open the HTML file (`index.html`) with a browser,
-and you will see a beautiful ellipse following your mouse.
+Now that we have the canvas and a draw function (ellipse),
+we can set up a draw event.
+When a new frame is requested the onDraw function will fire
+and the code will be executed.
+
+In this case we have an ellipse being drawn to the mouse position
+and with a size of 0.1 units.
+Note that the size of an ellipse usually is defined by two values (width and height).
+However, in this case that we omitted the height dimension Paperbit is going to create an
+ellipse of 0.1 units of width and height, aka a circle of 0.1 units of diameter.
+
+
+## 4. Open the HTML file
+Finally, we need to open the file to see our app.
+You can do it by opening it with any browser.
+You should see a beautiful ellipse following your mouse.
 
 ## Next Steps
 
