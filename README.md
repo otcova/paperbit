@@ -10,7 +10,7 @@ and setup a new project with the [html step guide](https://otcova.github.io/pape
 ## Quick Start
 
 1. Take a look at the [core concepts](https://otcova.github.io/paperbit/core_concepts.html).
-1. Import paperbit to your project
+1. Import paperbit to your project.
 1. And use this template to start programming.
 
 ```javascript
