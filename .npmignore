@@ -6,4 +6,4 @@ tests
 .gitignore
 .npmignore
 tsconfig.json
-webpack.config.json
+webpack.config.js
