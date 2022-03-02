@@ -37,7 +37,7 @@ for (const snippet of snippets) {
 
 const checkSnippetsWrap = () => {
 	for (const snippet of snippets)
-		snippet.container.style.flexDirection = window.innerWidth > 750 ? "row" : "column"
+		snippet.container.style.flexDirection = window.innerWidth > 800 ? "row" : "column"
 	return checkSnippetsWrap
 }
 addEventListener("resize", checkSnippetsWrap())
@@ -49,7 +49,7 @@ function createSnippetCanvas(container, snippet) {
 
 	div.style.flexShrink = 0
 	div.style.background = "#FFFE"
-	const h = 200
+	const h = 250
 	div.style.width = h + "px"
 	div.style.height = h * 9 / 16 + "px"
 

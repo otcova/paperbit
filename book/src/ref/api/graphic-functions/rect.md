@@ -10,7 +10,7 @@ const { rect, mouse, state, frame } = canvas.api
 ```
 
 ```javascript
-rect(0, 0, .85)
+rect(0, 0, 1)
 ```
 
 ```javascript
@@ -32,7 +32,7 @@ rect(x, y, width, height?)
 
 
 | Parameter | Type | Default Value |
-|:-:|:-:|:-|
+|:-:|:-:|:-:|
 | `x` | number | - |
 | `y` | number | - |
 | `width` | number | - |
@@ -43,6 +43,7 @@ rect(x, y, width, height?)
 The comportment of the function can be modified by editing
 this state properties:
 
+- [`state.color`]() --- set the color of the rectangle.
 - [`state.rectOrigin`]() --- set the origin of the rectangle.
 - [`state.rectUV`]() --- set the texture coordinates.
 - [`state.texture`]() --- set the texture.
