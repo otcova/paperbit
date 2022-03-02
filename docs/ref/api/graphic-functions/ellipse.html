@@ -145,24 +145,24 @@
                         <script src="../../../code/paperbit-snippets.js" type="module" defer></script>
 <h1 id="ellipse"><a class="header" href="#ellipse">Ellipse</a></h1>
 <div id="paperbit-snippets">
-<pre><code class="language-javascript">const { ellipse, state, frame } = canvas.api
+<pre><code class="language-js">const { ellipse, state, frame } = canvas.api
 </code></pre>
-<pre><code class="language-javascript">ellipse(0, 0, 1)
+<pre><code class="language-js">ellipse(0, 0, 1)
 </code></pre>
-<pre><code class="language-javascript">const t = 2 * frame.time
+<pre><code class="language-js">const t = 2 * frame.time
 for (let i = 0; i &lt; 6; ++i) {
 	const x = 0.6 * Math.sin(t - i)
 	const y = 0.6 * Math.cos(t - i)
 	ellipse(x, y, 0.6 - i / 10)
 }
 </code></pre>
-<pre><code class="language-javascript">ellipse(0, 0, 1 + 2 * frame.pixelSize)
+<pre><code class="language-js">ellipse(0, 0, 1 + 2 * frame.pixelSize)
 state.color = 1
 ellipse(0, 0, 1)
 </code></pre>
 </div>
 <h2 id="function"><a class="header" href="#function">Function</a></h2>
-<pre><code class="language-javascript">ellipse(x, y, width, height?)
+<pre><code class="language-js">ellipse(x, y, width, height?)
 </code></pre>
 <table><thead><tr><th style="text-align: center">Parameter</th><th style="text-align: center">Type</th><th style="text-align: center">Default Value</th></tr></thead><tbody>
 <tr><td style="text-align: center"><code>x</code></td><td style="text-align: center">number</td><td style="text-align: center">-</td></tr>

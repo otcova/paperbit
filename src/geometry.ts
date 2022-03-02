@@ -6,7 +6,7 @@ class Point {
 		this.coord = coord
 	}
 	distanceTo(obj: Point  | Rect) {
-		if (obj instanceof Point) return vec.dist(this.coord, obj.coord)
+		if (obj instanceof Point) return vec.distance(this.coord, obj.coord)
 		else if (obj instanceof Segment) {
 			console.log("TODO: distance point-segment")
 			return 0

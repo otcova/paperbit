@@ -5,15 +5,15 @@
 
 <div id="paperbit-snippets">
 
-```javascript
+```js
 const { ellipse, state, frame } = canvas.api
 ```
 
-```javascript
+```js
 ellipse(0, 0, 1)
 ```
 
-```javascript
+```js
 const t = 2 * frame.time
 for (let i = 0; i < 6; ++i) {
 	const x = 0.6 * Math.sin(t - i)
@@ -22,7 +22,7 @@ for (let i = 0; i < 6; ++i) {
 }
 ```
 
-```javascript
+```js
 ellipse(0, 0, 1 + 2 * frame.pixelSize)
 state.color = 1
 ellipse(0, 0, 1)
@@ -32,7 +32,7 @@ ellipse(0, 0, 1)
 
 ## Function
 
-```javascript
+```js
 ellipse(x, y, width, height?)
 ```
 

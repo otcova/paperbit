@@ -580,24 +580,24 @@ this state properties:</p>
 <div style="break-before: page; page-break-before: always;"></div><script src="../../../code/paperbit-snippets.js" type="module" defer></script>
 <h1 id="ellipse"><a class="header" href="#ellipse">Ellipse</a></h1>
 <div id="paperbit-snippets">
-<pre><code class="language-javascript">const { ellipse, state, frame } = canvas.api
+<pre><code class="language-js">const { ellipse, state, frame } = canvas.api
 </code></pre>
-<pre><code class="language-javascript">ellipse(0, 0, 1)
+<pre><code class="language-js">ellipse(0, 0, 1)
 </code></pre>
-<pre><code class="language-javascript">const t = 2 * frame.time
+<pre><code class="language-js">const t = 2 * frame.time
 for (let i = 0; i &lt; 6; ++i) {
 	const x = 0.6 * Math.sin(t - i)
 	const y = 0.6 * Math.cos(t - i)
 	ellipse(x, y, 0.6 - i / 10)
 }
 </code></pre>
-<pre><code class="language-javascript">ellipse(0, 0, 1 + 2 * frame.pixelSize)
+<pre><code class="language-js">ellipse(0, 0, 1 + 2 * frame.pixelSize)
 state.color = 1
 ellipse(0, 0, 1)
 </code></pre>
 </div>
 <h2 id="function-1"><a class="header" href="#function-1">Function</a></h2>
-<pre><code class="language-javascript">ellipse(x, y, width, height?)
+<pre><code class="language-js">ellipse(x, y, width, height?)
 </code></pre>
 <table><thead><tr><th style="text-align: center">Parameter</th><th style="text-align: center">Type</th><th style="text-align: center">Default Value</th></tr></thead><tbody>
 <tr><td style="text-align: center"><code>x</code></td><td style="text-align: center">number</td><td style="text-align: center">-</td></tr>
@@ -774,8 +774,76 @@ we could check the <a href="ref/api/canvas-data/">frame</a> data every frame.</p
 <ul>
 <li><a href="ref/api/canvas-data/">onResize</a> — Fires when the canvas size has been resized.</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="vector"><a class="header" href="#vector">Vector</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="matrix-1"><a class="header" href="#matrix-1">Matrix</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><script src="../../../code/paperbit-snippets.js" type="module" defer></script>
+<h1 id="vector"><a class="header" href="#vector">Vector</a></h1>
+<h2 id="import"><a class="header" href="#import">Import</a></h2>
+<pre><code class="language-javascript">import { vec } from &quot;paperbit&quot;
+</code></pre>
+<h2 id="content"><a class="header" href="#content">Content</a></h2>
+<table><thead><tr><th style="text-align: left">Method</th><th style="text-align: left">Arguments</th></tr></thead><tbody>
+<tr><td style="text-align: left">equal</td><td style="text-align: left"><code>v, u, tolerance = 1e-9</code></td></tr>
+<tr><td style="text-align: left">add</td><td style="text-align: left"><code>v, ...vectors</code></td></tr>
+<tr><td style="text-align: left">sub</td><td style="text-align: left"><code>v, ...vectors</code></td></tr>
+<tr><td style="text-align: left">mult</td><td style="text-align: left"><code>v, ...vectors</code></td></tr>
+<tr><td style="text-align: left">div</td><td style="text-align: left"><code>v, ...vectors</code></td></tr>
+<tr><td style="text-align: left">dot</td><td style="text-align: left"><code>v, u</code></td></tr>
+<tr><td style="text-align: left">round</td><td style="text-align: left"><code>v</code></td></tr>
+<tr><td style="text-align: left">floor</td><td style="text-align: left"><code>v</code></td></tr>
+<tr><td style="text-align: left">ceil</td><td style="text-align: left"><code>v</code></td></tr>
+<tr><td style="text-align: left">length</td><td style="text-align: left"><code>v</code></td></tr>
+<tr><td style="text-align: left">distance</td><td style="text-align: left"><code>a, b</code></td></tr>
+<tr><td style="text-align: left">normalize</td><td style="text-align: left"><code>v</code></td></tr>
+<tr><td style="text-align: left">resize</td><td style="text-align: left"><code>v, newSize</code></td></tr>
+</tbody></table>
+<h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
+<div id="paperbit-snippets">
+<pre><code class="language-js">const { ellipse, rect, state, mouse, frame } = canvas.api
+</code></pre>
+<pre><code class="language-js">ellipse(...frame.size, 2)
+ellipse(...vec.mult(-1, frame.size), 2)
+ellipse(...vec.mult([1, -1], frame.size), 2)
+ellipse(...vec.mult([-1, 1], frame.size), 2)
+</code></pre>
+<pre><code class="language-js">ellipse(0, 0, 2)
+state.color = 1
+ellipse(...vec.resize(mouse.pos, .4), 1)
+</code></pre>
+<pre><code class="language-js">ellipse(0, 0, 2)
+state.color = 1
+const len = Math.min(.4, vec.length(mouse.pos))
+ellipse(...vec.resize(mouse.pos, len), 1)
+</code></pre>
+<pre><code class="language-js">const p = vec.mult(2, mouse.pos)
+rect(...vec.div(vec.round(p), 2), .5)
+</code></pre>
+<pre><code class="language-js">ellipse(0, 0, 2 * vec.length(mouse.pos))
+</code></pre>
+<pre><code class="language-js">const a = [-1.2, -0.7]
+const b = [1, 0.5]
+
+state.colorAlpha = .5
+
+ellipse(...a, 2 * vec.distance(a, mouse.pos))
+ellipse(...b, 2 * vec.distance(b, mouse.pos))
+
+state.color = [.8, .2, .2]
+ellipse(...mouse.pos, .1)
+</code></pre>
+<pre><code class="language-js">const pos = [-.2, .1]
+const size = 1.3
+
+if (!vec.equal(mouse.pos, pos, size/2))
+	rect(...pos, size)
+</code></pre>
+<pre><code class="language-js">const pos = [-.2, .1]
+const size = [1.6, 0.6]
+
+if (vec.equal(mouse.pos, pos, vec.div(size, 2)))
+	state.color = [.8, .2, .2]
+
+rect(...pos, ...size)
+</code></pre>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="matrix-1"><a class="header" href="#matrix-1">Matrix</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="geometry-1"><a class="header" href="#geometry-1">Geometry</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="smoothbit"><a class="header" href="#smoothbit">SmoothBit</a></h1>
 

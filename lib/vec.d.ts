@@ -3,7 +3,7 @@ declare type _TupleOf<T, N extends number, R extends unknown[]> = R['length'] ex
 declare class Vec {
     new<N extends number, T extends number[] | Tuple<number, N>>(length: number | T, callback: (i: number) => number): T;
     new<N extends number, T extends number[] | Tuple<number, N>>(length: number, defaultValue: number): T;
-    equal(a: number[], b: number[], tolerance?: number): boolean;
+    equal(a: number[], b: number[], tolerance?: number | number[]): boolean;
     add(v: number[] | number, ...vectors: (number[] | number)[]): number[];
     sub(v: number[] | number, ...vectors: (number[] | number)[]): number[];
     mult<N extends number, T extends Tuple<number, N> | number[]>(v: T | number, ...vectors: (T | number)[]): T;
@@ -11,7 +11,7 @@ declare class Vec {
     round(v: number[]): number[];
     floor(v: number[]): number[];
     ceil(v: number[]): number[];
-    dist(a: number[], b: number[]): number;
+    distance(a: number[], b: number[]): number;
     dot(v: number[], u: number[]): number;
     length(v: number[]): number;
     resize<N extends number, T extends number[] | Tuple<number, N>>(v: T, newSize: number): T;

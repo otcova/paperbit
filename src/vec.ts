@@ -23,10 +23,15 @@ class Vec {
 		for (let i = 0; i < array.length; ++i) array[i] = value(i)
 		return array
 	}
-	equal(a: number[], b: number[], tolerance = 0.000000001) {
+	equal(a: number[], b: number[], tolerance: number | number[] = 1e-9) {
 		if (a.length != b.length) return false
-		for (let i = 0; i < a.length; ++i)
-			if (Math.abs(a[i] - b[i]) > tolerance) return false
+		if (typeof tolerance == "number") {
+			for (let i = 0; i < a.length; ++i)
+				if (Math.abs(a[i] - b[i]) > tolerance) return false
+		} else {
+			for (let i = 0; i < a.length; ++i)
+				if (Math.abs(a[i] - b[i]) > tolerance[i]) return false
+		}
 		return true
 	}
 
@@ -64,7 +69,7 @@ class Vec {
 	}
 
 	//spatial
-	dist(a: number[], b: number[]) {
+	distance(a: number[], b: number[]) {
 		if (a.length != b.length) throw Error("Invalid arguments")
 		return vec.length(vec.sub(a, b))
 	}
